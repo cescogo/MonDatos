@@ -20,7 +20,7 @@ public class MonDatos {
         // TODO code application logic here
          Conexion c = new Conexion(); // crea la conexion con la base de datos 
         c.conectar();// conecta a la base 
-        c.getSegmentos("select tablespace_name from dba_tables group by tablespace_name");
+        c.getSegmentos("select tablespace_name from dba_tables group by tablespace_name;");
     }
     
 }
