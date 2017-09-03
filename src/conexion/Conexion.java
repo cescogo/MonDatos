@@ -79,12 +79,10 @@ public class Conexion {
    
     /*Ejecutar Querys*/
     //aqui va el cod del grafico 
-        public float [] getSegmentos(String statement) throws InterruptedException {
-            int i=0;
-            float [] vec = new float[15];
-            while(i<15)
-            {
-                 float valor=0;
+        public String [] getSegmentos(String statement) throws InterruptedException {
+            
+            String [] vec = new String[5];
+          int i=0;
                  
         try {
             Statement stm = conexion.createStatement();
@@ -93,24 +91,19 @@ public class Conexion {
              getColumnNames(rs);
             while (rs.next()) {
               
-               String a = rs.getString("POOL");//Aqui deberia jalar el nombre de la columna
-                String b = rs.getString("FREE_MEMORY_IN_MB");// valor columnas 
+               String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
+                //String b = rs.getString("FREE_MEMORY_IN_MB");// valor columnas 
                
-              valor+= Float.parseFloat(b); // parsear valor 
-                System.out.println(a+" "+" "+b);   
-                
+              
+                System.out.println("tabla: "+a);   
+                vec[i]=a;
                
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
         
-        valor=176- valor;// diferencia a la memoria libre 
-        valor=(valor/176)*100;// porcentaje de memoria usada 
-            System.out.println("%"+valor);
-            vec[i]=valor;
-            i++;
-          Thread.sleep(995);
+        
+       
         }
         return vec;  
     }
