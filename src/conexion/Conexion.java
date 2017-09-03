@@ -3,23 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sqlmon.conexion;
+package conexion;
 
-
-
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 /**
  *
- * @author adan-
+ * @author cesar
  */
 public class Conexion {
+    
     private Connection conexion;
     static String url = "jdbc:oracle:thin:@localhost:1521/XE"; //Descargar ojdbc6.jar e incluirlo en la libreria
     static String user = "system";
@@ -79,14 +78,14 @@ public class Conexion {
    
     /*Ejecutar Querys*/
     //aqui va el cod del grafico 
-        public String [] getSegmentos(String statement) throws InterruptedException {
+        public String [] getSegmentos() throws InterruptedException {
             
             String [] vec = new String[5];
           int i=0;
                  
         try {
             Statement stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery(statement);
+            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null group by tablespace_name");
            // System.out.println("Ejecutando");
              getColumnNames(rs);
             while (rs.next()) {
@@ -128,3 +127,5 @@ public class Conexion {
     }
   }
 }
+
+
