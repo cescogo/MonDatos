@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author cesar
@@ -14,12 +16,14 @@ public class TableSpace {
     private float tam_total;
     private float uso;
     public float free;
+    DecimalFormat format;
 
-    public TableSpace(String nombre, float tam_total, float uso) {
+    public TableSpace(String nombre, float tam_total, float free) {
         this.nombre = nombre;
         this.tam_total = tam_total;
-        this.uso = uso;
-        free= tam_total-uso;
+        this.uso = tam_total-free;
+        this.free= free;
+        format = new DecimalFormat("00.0");
     }
 
     public String getNombre() {
@@ -45,15 +49,31 @@ public class TableSpace {
     public void setUso(float uso) {
         this.uso = uso;
     }
+
+    public float getFree() {
+        return free;
+    }
+
+    public void setFree(float free) {
+        this.free = free;
+    }
+
+
     
     public float porcent_use()
     {
-        return (uso/tam_total)*100;
+        return Float.valueOf(format.format((uso/tam_total)*100).replaceAll(",", "."));
     }
     
     public float porcent_free()
     {
-        return (free/tam_total)*100;
+        return Float.valueOf(format.format((free/tam_total)*100).replaceAll(",", "."));
     }
+
+    @Override
+    public String toString() {
+        return "TableSpace{" + "nombre=" + nombre + ", tam_total=" + tam_total + ", uso=" + porcent_use() + ", free=" + porcent_free() + '}';
+    }
+ 
     
 }

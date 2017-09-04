@@ -7,6 +7,7 @@ package control;
 
 import modelo.Conexion;
 import java.util.ArrayList;
+import modelo.TableSpace;
 import ventanas.*;
 
 
@@ -20,13 +21,14 @@ public class Control {
     private Vent1 ventIni;
     private Grafico graf;
     ArrayList<String> tabSpa;
-    
+    ArrayList<TableSpace> tab_graf;
     public Control()
     {
         model= new Conexion();
         model.conectar();
         ventIni= new Vent1(this);
         tabSpa= new ArrayList<>();
+         tab_graf= new ArrayList<>();
         
     }
     
@@ -36,12 +38,12 @@ public class Control {
         ventIni.init(tabSpa);
     }
     
-    public void iniciarVent2(ArrayList<String> selects)
+    public void iniciarVent2(ArrayList<String> selects) throws InterruptedException
     {
-        
+        tab_graf=model.getGrafica(selects);
         for(int k=0;k<selects.size();k++)
             {
-                System.out.println("seleccionados: "+selects.get(k));
+                System.out.println(tab_graf.get(k).toString());
                 
             }
         graf= new Grafico(ventIni,this);

@@ -19,6 +19,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -86,7 +88,11 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand()== "aceptar")
         {
-            gestor.iniciarVent2(sele);
+            try {
+                gestor.iniciarVent2(sele);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
              
     }

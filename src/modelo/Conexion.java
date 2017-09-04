@@ -142,27 +142,38 @@ public class Conexion {
         
     }
         // se obtiene la informacion de cada table space para ser graficado
-          public ArrayList<TableSpace> getGrafica() throws InterruptedException {
+          public ArrayList<TableSpace> getGrafica(ArrayList<String> selec) throws InterruptedException {
             ArrayList<TableSpace> vec=new ArrayList<>();
             TableSpace table;
             
                  
         try {
             Statement stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null group by tablespace_name");
-           // System.out.println("Ejecutando");
+            ResultSet rs = stm.executeQuery("select\n" +
+"  a.tablespace_name,\n" +
+"  sum(a.bytes)/(1024*1024) total_space_MB,\n" +
+"  round(b.free,2) Free_space_MB,\n" +
+"  round(b.free/(sum(a.bytes)/(1024*1024))* 100,2) percent_free\n" +
+" from dba_data_files a,\n" +
+"  (select tablespace_name,sum(bytes)/(1024*1024) free  from dba_free_space\n" +
+"  group by tablespace_name) b\n" +
+" where a.tablespace_name = b.tablespace_name(+)\n" +
+"  group by a.tablespace_name,b.free");
+           
              getColumnNames(rs);
             while (rs.next()) {
               
                String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
             
-               
-              
-                System.out.println("tabla: "+a);   
-                //vec.add(a);
-                
-                
-               
+               for(int k=0;k<selec.size();k++)
+            {              
+                 if(selec.get(k).equals(a))
+                 {
+                    table= new TableSpace(a,Float.parseFloat(rs.getString("TOTAL_SPACE_MB")),Float.parseFloat(rs.getString("FREE_SPACE_MB")));
+                    vec.add(table);
+               }
+            }
+
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
