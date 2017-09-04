@@ -5,7 +5,7 @@
  */
 package mondatos;
 
-import conexion.Conexion;
+import modelo.Conexion;
 import control.Control;
 import java.util.ArrayList;
 import ventanas.*;

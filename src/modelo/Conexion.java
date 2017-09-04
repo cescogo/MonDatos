@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package conexion;
+package modelo;
 
 import control.Control;
 import java.sql.Connection;
@@ -79,8 +79,8 @@ public class Conexion {
     }
 
    
-    /*Ejecutar Querys*/
-    //aqui va el cod del grafico 
+
+   // se obtienen los segmentos de la base de datos
         public ArrayList<String> getSegmentos() throws InterruptedException {
             ArrayList<String> vec=new ArrayList<>();
             
@@ -111,7 +111,7 @@ public class Conexion {
         
         return vec ;  
     }
-     
+     // se obtienen las tablas de cada tablespace
         public String [] getTable (String seg) throws InterruptedException {
             
             String [] vec = new String[20];
@@ -140,6 +140,38 @@ public class Conexion {
         }
         return vec;
         
+    }
+        // se obtiene la informacion de cada table space para ser graficado
+          public ArrayList<TableSpace> getGrafica() throws InterruptedException {
+            ArrayList<TableSpace> vec=new ArrayList<>();
+            TableSpace table;
+            
+                 
+        try {
+            Statement stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null group by tablespace_name");
+           // System.out.println("Ejecutando");
+             getColumnNames(rs);
+            while (rs.next()) {
+              
+               String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
+            
+               
+              
+                System.out.println("tabla: "+a);   
+                //vec.add(a);
+                
+                
+               
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        
+        
+       
+        }
+        
+        return vec ;  
     }
         /*Devuelve columna*/
    public static void getColumnNames(ResultSet rs) throws SQLException {

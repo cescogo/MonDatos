@@ -5,7 +5,7 @@
  */
 package control;
 
-import conexion.Conexion;
+import modelo.Conexion;
 import java.util.ArrayList;
 import ventanas.*;
 
