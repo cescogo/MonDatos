@@ -108,7 +108,36 @@ public class Conexion {
         
         return vec ;  
     }
+     
+        public String [] getTable (String seg) throws InterruptedException {
+            
+            String [] vec = new String[20];
+          int i=0;
+                 
+        try {
+            Statement stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("");
+           // System.out.println("Ejecutando");
+             getColumnNames(rs);
+            while (rs.next()) {
+              
+               String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
+                //String b = rs.getString("FREE_MEMORY_IN_MB");// valor columnas 
+               
+              
+                System.out.println("tabla: "+a);   
+                vec[i]=a;
+               
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         
+        
+       
+        }
+        return vec;
+        
+    }
         /*Devuelve columna*/
    public static void getColumnNames(ResultSet rs) throws SQLException {
     if (rs == null) {
