@@ -87,15 +87,10 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
         if(e.getActionCommand()== "aceptar")
         {
              System.out.println(sele.size());
-              for(int k=0;k<sele.size();k++)
-            {
-                System.out.println(sele.get(k));
-            }
+            
             //gestor.iniciarVent2(sele);
         }
-       
-        
-               // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             
     }
     
 
@@ -114,7 +109,6 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
             
             aux="";
         }
-          
         
      }
     
@@ -138,7 +132,6 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
                
                 if(temp.get(k).equals(aux)&&selec==1)
                 {
-                    
                     sele.add(aux);
                     aux="";
                     return;
