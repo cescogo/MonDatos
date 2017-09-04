@@ -87,7 +87,10 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
         if(e.getActionCommand()== "aceptar")
         {
              System.out.println(sele.size());
-        
+              for(int k=0;k<sele.size();k++)
+            {
+                System.out.println(sele.get(k));
+            }
             //gestor.iniciarVent2(sele);
         }
        
@@ -104,22 +107,45 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
             for(int j=461;j<(temp.get(i).length()+461);j++)
             {
                 aux=aux+(char)e.paramString().codePointAt(j);
+                
             }
+            repetidos(aux);
+            seleccionados(aux, e.getStateChange()); 
             
-            for(int k=0;k<temp.size();k++)
-            {
-                System.out.println(aux);
-                if(temp.get(k).equals(aux))
-                {
-                    sele.add(aux);
-                    return;
-                }
-            }
             aux="";
         }
           
         
      }
+    
+    private void repetidos(String aux)
+    {
+         for(int k=0;k<sele.size();k++)
+            {              
+                 if(sele.get(k).equals(aux))
+                 {
+                    
+                     sele.remove(k);
+                 
+               }
+            }
+    }
+    
+    private void seleccionados(String aux,int selec)
+    {
+        for(int k=0;k<temp.size();k++)
+            {
+               
+                if(temp.get(k).equals(aux)&&selec==1)
+                {
+                    
+                    sele.add(aux);
+                    aux="";
+                    return;
+                }
+            }
+    }
+    
 
     
     
