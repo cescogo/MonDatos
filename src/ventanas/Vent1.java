@@ -5,6 +5,7 @@
  */
 package ventanas;
 
+import control.Control;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
@@ -33,23 +34,24 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
     private JPanel panel;
     private ArrayList<String> sele;
     private Button aceptar;
+    private Control gestor;
     
-    public Vent1()
+    public Vent1(Control c)
     {
         super("tablespace");
-        
+        gestor=c;
         panel= new JPanel();   
         sele= new ArrayList<>();
         
         
     }
     
-    public ArrayList<String> init(ArrayList<String> TaSpa)
+    public void init(ArrayList<String> TaSpa)
     {
          
         GridBagLayout tb= new GridBagLayout();
         panel.setLayout(tb);
-         //new JCheckBox("Chin");
+        sele=TaSpa;
        
         
         GridBagConstraints gc = new GridBagConstraints();
@@ -62,9 +64,8 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
             gc.gridy=i;
             JCheckBox ch=new JCheckBox(TaSpa.get(i));
             ch.addItemListener((ItemListener) this);
-            ch.setActionCommand(TaSpa.get(i));
             panel.add(ch,gc);
-            System.out.println(ch);
+            
         }
         sele=TaSpa;
         aceptar=new Button("aceptar");
@@ -78,14 +79,14 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        return sele;
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand()== "aceptar")
         {
-            
+            gestor.iniciarVent2(sele);
         }
        
         
@@ -96,12 +97,34 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
     @Override
     public void itemStateChanged(ItemEvent e) {
         
+        for(int i=0;i<sele.size();i++){
+            String aux="";
+            for(int j=461;j<(sele.get(i).length()+461);j++)
+            {
+                aux=aux+(char)e.paramString().codePointAt(j);
+            }
             
+                
+            for(int k=0;k<sele.size();k++)
+            {
+                if(sele.get(k).equals(aux))
+                {
+                    System.out.println("sirvio con:"+aux+" "+k);
+                }
+            }
             
+        }
+       
+//            System.out.println((char)e.paramString().codePointAt(462));
+//        System.out.println(e.paramString().lastIndexOf("SYSAUX"));
+//        System.out.println(e.paramString().lastIndexOf("USERS"));
+        
+            
+        
             
             
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

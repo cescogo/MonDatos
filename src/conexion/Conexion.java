@@ -5,6 +5,7 @@
  */
 package conexion;
 
+import control.Control;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,8 +25,10 @@ public class Conexion {
     static String user = "system";
     static String password = "root";
     private boolean exito;
+    private Control gestor;
    
     private ArrayList<String> resultados = new ArrayList<String>();
+
     
     
     /*Metodos*/

@@ -6,6 +6,7 @@
 package mondatos;
 
 import conexion.Conexion;
+import control.Control;
 import java.util.ArrayList;
 import ventanas.*;
 
@@ -19,18 +20,20 @@ public class MonDatos {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
         // TODO code application logic here
-        ArrayList<String> TabSpa;   
-        Tabla ta = new Tabla();
-         Conexion c = new Conexion(); // crea la conexion con la base de datos 
-        c.conectar();// conecta a la base 
-        TabSpa=c.getSegmentos();
+          
+       // Tabla ta = new Tabla();
+        Control gestor = new Control();
+        gestor.iniciar();
+          // crea la conexion con la base de datos 
+       // conecta a la base 
+       
         
-        Vent1 vent= new Vent1();
-        vent.init(TabSpa);
-        ta.toString();
+        
+       // ta.toString();
         
     }
     
