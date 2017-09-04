@@ -7,7 +7,9 @@ package control;
 
 import conexion.Conexion;
 import java.util.ArrayList;
-import ventanas.Vent1;
+import ventanas.*;
+
+
 
 /**
  *
@@ -16,6 +18,7 @@ import ventanas.Vent1;
 public class Control {
     private Conexion model;
     private Vent1 ventIni;
+    private Grafico graf;
     ArrayList<String> tabSpa;
     
     public Control()
@@ -35,6 +38,13 @@ public class Control {
     
     public void iniciarVent2(ArrayList<String> selects)
     {
+        
+        for(int k=0;k<selects.size();k++)
+            {
+                System.out.println("seleccionados: "+selects.get(k));
+                
+            }
+        graf= new Grafico(ventIni,this);
         
     }
 }

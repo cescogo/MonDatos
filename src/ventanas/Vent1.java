@@ -86,9 +86,7 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand()== "aceptar")
         {
-             System.out.println(sele.size());
-            
-            //gestor.iniciarVent2(sele);
+            gestor.iniciarVent2(sele);
         }
              
     }
