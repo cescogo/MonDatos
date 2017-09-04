@@ -47,6 +47,7 @@ public class Control {
                 
             }
         graf= new Grafico(ventIni,this);
+        graf.init(tab_graf);
         
     }
 }
