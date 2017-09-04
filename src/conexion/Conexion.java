@@ -78,10 +78,9 @@ public class Conexion {
    
     /*Ejecutar Querys*/
     //aqui va el cod del grafico 
-        public String [] getSegmentos() throws InterruptedException {
+        public ArrayList<String> getSegmentos() throws InterruptedException {
+            ArrayList<String> vec=new ArrayList<>();
             
-            String [] vec = new String[5];
-          int i=0;
                  
         try {
             Statement stm = conexion.createStatement();
@@ -91,11 +90,13 @@ public class Conexion {
             while (rs.next()) {
               
                String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
-                //String b = rs.getString("FREE_MEMORY_IN_MB");// valor columnas 
+            
                
               
                 System.out.println("tabla: "+a);   
-                vec[i]=a;
+                vec.add(a);
+                
+                
                
             }
         } catch (SQLException ex) {
@@ -104,7 +105,8 @@ public class Conexion {
         
        
         }
-        return vec;  
+        
+        return vec ;  
     }
         
         /*Devuelve columna*/
