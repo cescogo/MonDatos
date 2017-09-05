@@ -6,45 +6,56 @@
 package ventanas;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Vector;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 /**
  *
  * @author carmc_000
  */
-public class Tabla extends JFrame {
-    public Tabla(){
-    super("Prueba 1");
-    this.setSize(500, 500);
+    public class Tabla extends JFrame {    
+
+    public Tabla(ArrayList<String> ts)
+        {
+         //headers for the table
+            String[] columns = new String[] {
+                //"Id", "N", "Hourly Rate", "Part Time"
+                "ID","Date", "Table", "Registro", "Size", "T.transaccion", "T.total"   
+            };
     
-    Vector col = new Vector();
-    col.add("Date");
-    col.add("TableSpace");
-    col.add("Tabla");
-    col.add("Registro");
-    col.add("T.transaccional");
-    col.add("T.total");
+ Object[][] data = new Object[ts.size()][];
+for(int i = 0; i < ts.size(); i++) {
+   String dato = ts.get(i);
+   data[i] =
+      new Object[]{
+         i,
+         fecha(),
+         dato,
+         0,
+          0,
+         0,
+         0
+      };
+   }
+
+            //create table with data
+            JTable table = new JTable(data, columns);
+
+            //add the table to the frame
+            this.add(new JScrollPane(table));
+
+            this.setTitle("Tabla");
+            this.setSize(800, 800);
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
+            this.pack();
+            this.setVisible(true);
+    }    
     
-    Vector filas = new Vector();
-    
-    
-     Vector fil = new Vector();
-    fil.add("Val prueba");
-    fil.add("val ");
-    
-    filas.add(fil);
-    
-    
-    JTable tb1 = new JTable(filas,col);
-    
-    JScrollPane panel = new JScrollPane(tb1);
-    this.getContentPane().add(panel);
-    this.setVisible(true);
-    
+    public String fecha(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String sDate= sdf.format(date);
+        return sDate;
     }
-   // String[] columnNames = {"Date", "TablaSpace", "Tabla", "Registro", "size", "T.transferida","T.Total"};
-    
 
 }

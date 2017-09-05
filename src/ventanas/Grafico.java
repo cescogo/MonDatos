@@ -16,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -146,7 +148,17 @@ public class Grafico extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(int i=0;i<ts.size();i++)
+        {
+        if(e.getActionCommand()== ts.get(i).getNombre())
+        {
+            try {
+                gestor.iniciarVent3(ts.get(i).getNombre());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        }
     }
 
 

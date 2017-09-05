@@ -5,8 +5,10 @@
  */
 package control;
 
+import java.awt.List;
 import modelo.Conexion;
 import java.util.ArrayList;
+import java.util.Arrays;
 import modelo.TableSpace;
 import ventanas.*;
 
@@ -21,13 +23,16 @@ public class Control {
     private Vent1 ventIni;
     private Grafico graf;
     ArrayList<String> tabSpa;
+    ArrayList<String> ta;
     ArrayList<TableSpace> tab_graf;
+    private Tabla tabla;
     public Control()
     {
         model= new Conexion();
         model.conectar();
         ventIni= new Vent1(this);
         tabSpa= new ArrayList<>();
+        ta = new ArrayList<>();
          tab_graf= new ArrayList<>();
         
     }
@@ -35,7 +40,9 @@ public class Control {
     public void iniciar() throws InterruptedException
     {        
         tabSpa= model.getSegmentos();
+        
         ventIni.init(tabSpa);
+        
     }
     
     public void iniciarVent2(ArrayList<String> selects) throws InterruptedException
@@ -50,4 +57,22 @@ public class Control {
         graf.init(tab_graf);
         
     }
+     public void iniciarVent3( String ts) throws InterruptedException
+    {
+       ta = model.getTable(ts);
+       
+        tabla = new Tabla(ta);
+         System.out.println(ta); 
+        
+        
+        
+    }
+     
+    public static ArrayList<String> convertStringArrayToArraylist(String [] strArr){
+    ArrayList<String> stringList = new ArrayList<String>();
+    for (int i = 0;i>=strArr.length;i++ ) {
+        stringList.add(strArr[i]);
+    }
+    return stringList;
+}
 }

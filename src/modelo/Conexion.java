@@ -112,10 +112,34 @@ public class Conexion {
         return vec ;  
     }
      // se obtienen las tablas de cada tablespace
-        public String [] getTable (String seg) throws InterruptedException {
+       // se obtienen las tablas de la base de datos
+        public ArrayList<String> getTable(String t) throws InterruptedException {
+            ArrayList<String> vec=new ArrayList<>();
             
-            String [] vec = new String[20];
-          int i=0;
+                 
+        try {
+            Statement stm = conexion.createStatement();
+            ResultSet rs = stm.executeQuery("select TABLESPACE_NAME,TABLE_NAME from all_tables where tablespace_name = '"+t+"'");
+           // System.out.println("Ejecutando");
+             getColumnNames(rs);
+            while (rs.next()) {
+              
+               String a = rs.getString("TABLE_NAME");//Aqui deberia jalar el nombre de la columna
+                System.out.println("t: "+a);                
+                vec.add(a);
+               
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());       
+       
+        }
+        
+        return vec ;  
+    }
+        //obtener los byte
+        public ArrayList<String> getByte(String t) throws InterruptedException {
+            ArrayList<String> vec=new ArrayList<>();
+            
                  
         try {
             Statement stm = conexion.createStatement();
@@ -124,22 +148,17 @@ public class Conexion {
              getColumnNames(rs);
             while (rs.next()) {
               
-               String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
-                //String b = rs.getString("FREE_MEMORY_IN_MB");// valor columnas 
-               
-              
-                System.out.println("tabla: "+a);   
-                vec[i]=a;
+               String a = rs.getString("TABLE_NAME");//Aqui deberia jalar el nombre de la columna
+                System.out.println("b: "+a);                
+                vec.add(a);
                
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        
-        
+            System.out.println(ex.getMessage());       
        
         }
-        return vec;
         
+        return vec ;  
     }
         // se obtiene la informacion de cada table space para ser graficado
           public ArrayList<TableSpace> getGrafica(ArrayList<String> selec) throws InterruptedException {
