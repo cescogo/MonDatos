@@ -12,8 +12,11 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,96 +28,125 @@ import modelo.TableSpace;
  *
  * @author cesar
  */
-public class Grafico extends JFrame {
-     private JPanel panel,pan_prc;
+public class Grafico extends JFrame implements ActionListener{
+     private JPanel pan_prc,pan_nam,pan_button;
      private Control gestor;
-     private JLabel porcent;
+     private JLabel porcent,ch;
      private String[] numb;
+     private JButton boton;
      ArrayList<TableSpace> ts;
+     Color[] colors;
       int[] param;
     public Grafico(Vent1 ven,Control c)
     {
         super("tablespace");
      ven.dispose();   
-     panel= new JPanel(); 
+     pan_nam= new JPanel(); 
+     pan_button= new JPanel();
      pan_prc= new JPanel(); 
+     boton= new JButton();
      gestor=c;
-      
-       setSize(700,400);
+      colors= new  Color[]{Color.BLUE,Color.CYAN,Color.GREEN,Color.MAGENTA,Color.ORANGE,Color.RED,Color.YELLOW};
+      numb= new String[]{"0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"};
+       setSize(850,430);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
     }
     
     public void init(ArrayList<TableSpace> tab_graf)
     {
         ts=tab_graf;
-        numb= new String[]{"0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"};
+        
         int j=0;
         GridBagLayout tb= new GridBagLayout();
-        panel.setLayout(new BorderLayout());
-       pan_prc.setLayout(tb);
-       
-        
+        pan_prc.setLayout(tb);
+        pan_nam.setLayout(tb);
+        pan_button.setLayout(tb);        
         GridBagConstraints gc = new GridBagConstraints();
-
-   
-
-         gc.insets=new Insets(10,10,10,10);
+        gc.insets=new Insets(10,10,10,10);
         for(int i=0;i<11;i++)
         {
             gc.gridx=i;
             gc.gridy=0;
             
-           JLabel ch=new JLabel(numb[j]);
+           ch=new JLabel(numb[j]);
 
             pan_prc.add(ch,gc);     
             j++;
         }
-       
-        
-//        add(panel,BorderLayout.CENTER);
+        gc.insets=new Insets(10,0,0,10);
+            gc.gridx=0;
+            gc.gridy=0;            
+           ch=new JLabel("TableSpaces");
+           pan_nam.add(ch,gc);
+           porcent= new JLabel("porcent uso");
+           pan_button.add(porcent,gc);
+           gc.gridx=1;
+           ch=new JLabel("Boton");
+           pan_button.add(ch,gc);
+           j=1;
+       for(int i=0;i<ts.size();i++)
+        {
+            gc.gridx=0;
+            gc.gridy=j;
+           ch=new JLabel(ts.get(i).getNombre());
+           ch.setForeground(colors[i]);
+            pan_nam.add(ch,gc);  
+           porcent=new JLabel(Float.toString(ts.get(i).porcent_use())+"%");
+           porcent.setForeground(colors[i]);
+           pan_button.add(porcent,gc);
+           gc.gridx=1;
+           boton= new JButton(ts.get(i).getNombre());
+           boton.setActionCommand(ts.get(i).getNombre());
+           boton.addActionListener(this);
+            pan_button.add(boton,gc);           
+              
+            j++;
+        }
+        add(pan_button,BorderLayout.EAST);
+        add(pan_nam,BorderLayout.WEST);
         add(pan_prc,BorderLayout.SOUTH);
     }
     public void paint( Graphics g )
 {
     super.paint( g );  // llamar al método paint de la superclase
  
-   param=new int[]{130,165,210,250,295,340,380,425,465,510,555};
+   param=new int[]{205,240,285,330,370,415,455,500,540,585,635};
     g.setColor(Color.LIGHT_GRAY);
     for(int i=0;i<11;i++)
     {
         g.drawLine(param[i],60, param[i], 400);
     }
     g.setColor(Color.RED);
-    g.drawLine(488,60, 488, 400);
-    int y=65;
+    g.drawLine(562,60, 562, 400);
+    int y=180;
+    int aux;
     for(int i=0;i<ts.size();i++)
     {
-    g.setColor(Color.RED);
-    g.fillRect(130,y, locuse((int)ts.get(i).porcent_use()), 30);
-    g.setColor(Color.BLACK);
-        System.out.println(locfree((int)ts.get(i).porcent_free()));
-    g.drawRect((int)g.getClipBounds().getMaxX()-145,y,locfree((int)ts.get(i).porcent_free()), 29);// ver eje x
-        
-//    g.drawRect(545, y, 9, 29);
-        y+=45;
+    g.setColor(colors[i]);
+    g.drawRect(205,y,430, 20);// ver eje x
+    aux=locuse((int)ts.get(i).porcent_use());
+    g.fillRect(205,y, aux, 20);
+    
+    y+=35;
     }
    
 } 
  
     private int locuse(int porc)
     {
-        int aux=((426*porc)/100)+1;
+        int aux=((430*porc)/100)+1;
         System.out.println(aux);
         return aux;
     }
     
-    private int locfree(int porc)
-    {
-        int aux=param[(int)(porc/10)+1]-param[(int)(porc/10)];
-        
-        return (porc*aux)/10;
+   
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
