@@ -88,7 +88,7 @@ public class Conexion {
         try {
             Statement stm = conexion.createStatement();
             ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null group by tablespace_name");
-           // System.out.println("Ejecutando");
+           
              getColumnNames(rs);
             while (rs.next()) {
               
@@ -96,7 +96,7 @@ public class Conexion {
             
                
               
-                System.out.println("tabla: "+a);   
+                 
                 vec.add(a);
                 
                 
@@ -120,12 +120,12 @@ public class Conexion {
         try {
             Statement stm = conexion.createStatement();
             ResultSet rs = stm.executeQuery("select TABLESPACE_NAME,TABLE_NAME from all_tables where tablespace_name = '"+t+"'");
-           // System.out.println("Ejecutando");
+          
              getColumnNames(rs);
             while (rs.next()) {
               
                String a = rs.getString("TABLE_NAME");//Aqui deberia jalar el nombre de la columna
-                System.out.println("t: "+a);                
+                            
                 vec.add(a);
                
             }
@@ -144,12 +144,12 @@ public class Conexion {
         try {
             Statement stm = conexion.createStatement();
             ResultSet rs = stm.executeQuery("");
-           // System.out.println("Ejecutando");
+          
              getColumnNames(rs);
             while (rs.next()) {
               
                String a = rs.getString("TABLE_NAME");//Aqui deberia jalar el nombre de la columna
-                System.out.println("b: "+a);                
+                               
                 vec.add(a);
                
             }
@@ -218,8 +218,7 @@ public class Conexion {
       // Get the name of the column's table name
       String tableName = rsMetaData.getTableName(i);
     
-      //System.out.println("column name=" + columnName + " table=" + tableName + "");
-      System.out.println(columnName);
+ 
     }
   }
 }

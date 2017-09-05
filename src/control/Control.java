@@ -47,11 +47,6 @@ public class Control {
     public void iniciarVent2(ArrayList<String> selects) throws InterruptedException
     {
         tab_graf=model.getGrafica(selects);
-        for(int k=0;k<selects.size();k++)
-            {
-                System.out.println(tab_graf.get(k).getNombre());
-                
-            }
         graf= new Grafico(ventIni,this);
         graf.init(tab_graf);
         
@@ -61,7 +56,7 @@ public class Control {
        ta = model.getTable(ts);
        
         tabla = new Tabla(ta);
-         System.out.println(ta); 
+         
         
         
         

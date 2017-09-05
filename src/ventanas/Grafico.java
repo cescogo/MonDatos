@@ -140,7 +140,7 @@ public class Grafico extends JFrame implements ActionListener{
     private int locuse(int porc)
     {
         int aux=((430*porc)/100)+1;
-        System.out.println(aux);
+       
         return aux;
     }
     
