@@ -40,7 +40,6 @@ public class Control {
     public void iniciar() throws InterruptedException
     {        
         tabSpa= model.getSegmentos();
-        
         ventIni.init(tabSpa);
         
     }
@@ -50,7 +49,7 @@ public class Control {
         tab_graf=model.getGrafica(selects);
         for(int k=0;k<selects.size();k++)
             {
-                System.out.println(tab_graf.get(k).toString());
+                System.out.println(tab_graf.get(k).getNombre());
                 
             }
         graf= new Grafico(ventIni,this);

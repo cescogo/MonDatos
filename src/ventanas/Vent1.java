@@ -77,7 +77,7 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
         gc.gridy=10;
         panel.add(aceptar,gc);
         add(panel,BorderLayout.CENTER);
-       setSize(500,500);
+       setSize(400,200);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,7 +103,7 @@ public class Vent1 extends JFrame implements ActionListener, ItemListener{
         String aux="";
         for(int i=0;i<temp.size();i++){
             
-            for(int j=461;j<(temp.get(i).length()+461);j++)
+            for(int j=459;j<(temp.get(i).length()+459);j++)
             {
                 aux=aux+(char)e.paramString().codePointAt(j);
                 

@@ -45,9 +45,9 @@ for(int i = 0; i < ts.size(); i++) {
             this.add(new JScrollPane(table));
 
             this.setTitle("Tabla");
-            this.setSize(800, 800);
+            this.setSize(1000, 400);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
-            this.pack();
+           this.setResizable(false);
             this.setVisible(true);
     }    
     
