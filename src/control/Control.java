@@ -9,6 +9,7 @@ import java.awt.List;
 import modelo.Conexion;
 import java.util.ArrayList;
 import java.util.Arrays;
+import modelo.Table;
 import modelo.TableSpace;
 import ventanas.*;
 
@@ -23,7 +24,7 @@ public class Control {
     private Vent1 ventIni;
     private Grafico graf;
     ArrayList<String> tabSpa;
-    ArrayList<String> ta;
+    ArrayList<Table> ta;
     ArrayList<TableSpace> tab_graf;
     private Tabla tabla;
     public Control()
