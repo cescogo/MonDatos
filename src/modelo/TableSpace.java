@@ -23,7 +23,7 @@ public class TableSpace {
         this.tam_total = tam_total;
         this.uso = tam_total-free;
         this.free= free;
-        format = new DecimalFormat("00.0");
+        format = new DecimalFormat("00.00");
     }
 
     public String getNombre() {
