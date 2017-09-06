@@ -21,7 +21,7 @@ public class Tabla extends JFrame {
         //headers for the table
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
-            "Table", "Size", "T.transaccion"
+            "Table", "Size", "T.transaccion","Tamano"
         };
         Table tab;
         Object[][] data = new Object[ts.size()][];
@@ -31,8 +31,13 @@ public class Tabla extends JFrame {
                     = new Object[]{
                         tab.getName(),
                         tab.getBytes(),
-                        tab.getCount()
+                        tab.getCount(),
+                        tab.getBytes()*tab.getCount()
+                       
                     };
+            //Dba_tablespaces, que indices tiene una tabla ,la tabla q dice q columnas tiene los indeces de una tabla sugerencias
+            //
+            // dele ud a los sql y los calculos para meterlos\el\jueves a l;a vista 
         }
 
         //create table with data
