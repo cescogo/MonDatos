@@ -158,9 +158,9 @@ public class Conexion {
     }
     // se obtiene la informacion de cada table space para ser graficado
 
-    public ArrayList<TableSpace> getGrafica(ArrayList<String> selec) throws InterruptedException {
-        ArrayList<TableSpace> vec = new ArrayList<>();
-        TableSpace table;
+    public TableSpace getGrafica(String selec) throws InterruptedException {
+        
+        TableSpace table = null;
 
         try {
             Statement stm = conexion.createStatement();
@@ -180,12 +180,12 @@ public class Conexion {
 
                 String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
 
-                for (int k = 0; k < selec.size(); k++) {
-                    if (selec.get(k).equals(a)) {
+                
+                    if (selec.equals(a)) {
                         table = new TableSpace(a, Float.parseFloat(rs.getString("TOTAL_SPACE_MB")), Float.parseFloat(rs.getString("FREE_SPACE_MB")));
-                        vec.add(table);
+                        
                     }
-                }
+                
 
             }
         } catch (SQLException ex) {
@@ -193,7 +193,7 @@ public class Conexion {
 
         }
 
-        return vec;
+        return table;
     }
 
     /*Devuelve columna*/

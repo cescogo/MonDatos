@@ -18,6 +18,14 @@ public class TableSpace {
     public float free;
     DecimalFormat format;
 
+    public TableSpace() {
+         this.nombre = "";
+        this.tam_total = 0;
+        this.uso = 0;
+        this.free= 0;
+        
+    }
+
     public TableSpace(String nombre, float tam_total, float free) {
         this.nombre = nombre;
         this.tam_total = tam_total;

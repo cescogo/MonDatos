@@ -30,13 +30,13 @@ import modelo.TableSpace;
  *
  * @author cesar
  */
-public class Grafico extends JFrame implements ActionListener{
+public class Grafico extends JFrame {
      private JPanel pan_prc,pan_nam,pan_button;
      private Control gestor;
      private JLabel porcent,ch;
      private String[] numb;
      private JButton boton;
-     ArrayList<TableSpace> ts;
+     TableSpace ts;
      Color[] colors;
       int[] param;
     public Grafico(Vent1 ven,Control c)
@@ -48,16 +48,15 @@ public class Grafico extends JFrame implements ActionListener{
      pan_prc= new JPanel(); 
      boton= new JButton();
      gestor=c;
-      colors= new  Color[]{Color.BLUE,Color.CYAN,Color.GREEN,Color.MAGENTA,Color.ORANGE,Color.RED,Color.YELLOW};
       numb= new String[]{"0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"};
-       setSize(850,430);
+       setSize(1000,430);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
     }
     
-    public void init(ArrayList<TableSpace> tab_graf)
+    public void init(TableSpace tab_graf)
     {
         ts=tab_graf;
         
@@ -68,7 +67,7 @@ public class Grafico extends JFrame implements ActionListener{
         pan_button.setLayout(tb);        
         GridBagConstraints gc = new GridBagConstraints();
         gc.insets=new Insets(10,10,10,10);
-        for(int i=0;i<11;i++)
+        for(int i=0;i<11;i++)// no tocar 
         {
             gc.gridx=i;
             gc.gridy=0;
@@ -89,26 +88,13 @@ public class Grafico extends JFrame implements ActionListener{
            ch=new JLabel("Boton");
            pan_button.add(ch,gc);
            j=1;
-       for(int i=0;i<ts.size();i++)
-        {
-            gc.gridx=0;
-            gc.gridy=j;
-           ch=new JLabel(ts.get(i).getNombre());
-           ch.setForeground(colors[i]);
-            pan_nam.add(ch,gc);  
-           porcent=new JLabel(Float.toString(ts.get(i).porcent_use())+"%");
-           porcent.setForeground(colors[i]);
-           pan_button.add(porcent,gc);
-           gc.gridx=1;
-           boton= new JButton(ts.get(i).getNombre());
-           boton.setActionCommand(ts.get(i).getNombre());
-           boton.addActionListener(this);
-            pan_button.add(boton,gc);           
-              
-            j++;
-        }
+      // aqui van los paneles de los datos y la tabla 
+      JLabel  label= new JLabel("tabla datos");
+            gc.gridx=1;
+            gc.gridy=1;
+      pan_prc.add(label,gc);// meter la tabla con estas coordenadas
         add(pan_button,BorderLayout.EAST);
-        add(pan_nam,BorderLayout.WEST);
+        add(pan_nam,BorderLayout.WEST);        
         add(pan_prc,BorderLayout.SOUTH);
     }
     public void paint( Graphics g )
@@ -122,19 +108,15 @@ public class Grafico extends JFrame implements ActionListener{
         g.drawLine(param[i],60, param[i], 400);
     }
     g.setColor(Color.RED);
-    g.drawLine(562,60, 562, 400);
-    int y=180;
-    int aux;
-    for(int i=0;i<ts.size();i++)
-    {
-    g.setColor(colors[i]);
-    g.drawRect(205,y,430, 20);// ver eje x
-    aux=locuse((int)ts.get(i).porcent_use());
-    g.fillRect(205,y, aux, 20);
+    g.drawLine(562,60, 562, 400);// variable cambiable
     
-    y+=35;
-    }
-   
+    int aux;
+    
+    g.setColor(Color.RED);
+    g.drawRect(205,180,430, 20);// ver eje x
+    aux=locuse((int)ts.porcent_use());
+    g.fillRect(205,180, aux, 20);
+     
 } 
  
     private int locuse(int porc)
@@ -146,20 +128,7 @@ public class Grafico extends JFrame implements ActionListener{
     
    
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        for(int i=0;i<ts.size();i++)
-        {
-        if(e.getActionCommand()== ts.get(i).getNombre())
-        {
-            try {
-                gestor.iniciarVent3(ts.get(i).getNombre());
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        }
-    }
+   
 
 
 }

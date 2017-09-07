@@ -25,7 +25,7 @@ public class Control {
     private Grafico graf;
     ArrayList<String> tabSpa;
     ArrayList<Table> ta;
-    ArrayList<TableSpace> tab_graf;
+    TableSpace tab_graf;
     private Tabla tabla;
     public Control()
     {
@@ -34,8 +34,7 @@ public class Control {
         ventIni= new Vent1(this);
         tabSpa= new ArrayList<>();
         ta = new ArrayList<>();
-         tab_graf= new ArrayList<>();
-        
+         tab_graf= new TableSpace();
     }
     
     public void iniciar() throws InterruptedException
@@ -45,9 +44,9 @@ public class Control {
         
     }
     
-    public void iniciarVent2(ArrayList<String> selects) throws InterruptedException
+    public void iniciarVent2(String select) throws InterruptedException 
     {
-        tab_graf=model.getGrafica(selects);
+        tab_graf=model.getGrafica(select);
         graf= new Grafico(ventIni,this);
         graf.init(tab_graf);
         
@@ -63,11 +62,5 @@ public class Control {
         
     }
      
-    public static ArrayList<String> convertStringArrayToArraylist(String [] strArr){
-    ArrayList<String> stringList = new ArrayList<String>();
-    for (int i = 0;i>=strArr.length;i++ ) {
-        stringList.add(strArr[i]);
-    }
-    return stringList;
-}
+  
 }
