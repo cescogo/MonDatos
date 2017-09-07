@@ -48,15 +48,17 @@ public class Control {
     public void iniciarVent2(String select) throws InterruptedException 
     {
         tab_graf=model.getGrafica(select);
-        graf= new Grafico(ventIni,this);
+        ta = model.getTable(select);
+        graf= new Grafico(ventIni,this,ta);
         graf.init(tab_graf);
         
+        
     }
-     public void iniciarVent3( String ts) throws InterruptedException
+     public ArrayList<Table> iniciarVent3( String ts) throws InterruptedException
     {
        ta = model.getTable(ts);
-       
-        tabla = new Tabla(ta);
+       return ta;
+        //tabla = new Tabla(ta);
          
         
         

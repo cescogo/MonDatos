@@ -15,7 +15,7 @@ import modelo.Table;
  *
  * @author carmc_000
  */
-public class Tabla extends JFrame {
+public class Tabla extends JPanel {
 
     public Tabla(ArrayList<Table> ts) {
         //headers for the table
@@ -46,10 +46,10 @@ public class Tabla extends JFrame {
         //add the table to the frame
         this.add(new JScrollPane(table));
 
-        this.setTitle("Tabla");
+        //this.setTitle("Tabla");
         this.setSize(1000, 400);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setResizable(false);
         this.setVisible(true);
     }
 
