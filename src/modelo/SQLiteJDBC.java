@@ -38,7 +38,7 @@ static Statement stmt = null;
 //   query("UPDATE TB_SPACES SET NOMBRE = '"+tabla+"' WHERE ID = 1;");
 //   select("select * from TB_SPACES;"); 
  
-   static void conectar(){
+   public  void conectar(){
      
       try {
          Class.forName(dir);
@@ -49,7 +49,7 @@ static Statement stmt = null;
       }
       System.out.println("Conexion Correcta");
    }  
-  static void query(String sql) throws SQLException{
+  public  void query(String sql) throws SQLException{
     try {   stmt = c.createStatement();
           //sql = ""; 
          stmt.executeUpdate(sql);
@@ -60,12 +60,12 @@ static Statement stmt = null;
       }
    }
    
-   static ArrayList<TableSpace> select(String sql) throws SQLException{
+   public  ArrayList<TableSpace> select(String sql) throws SQLException{
        ArrayList<TableSpace> regs= new ArrayList<>();
    try {
     TableSpace tab=null;
       stmt = c.createStatement();
-      ResultSet rs = stmt.executeQuery(sql);
+      ResultSet rs = stmt.executeQuery("select * from TB_SPACES where nombre= '"+sql+"';");
       
       while ( rs.next() ) {
           rs.getMetaData();

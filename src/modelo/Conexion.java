@@ -79,7 +79,7 @@ public class Conexion {
 
         try {
             Statement stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null AND tablespace_name != 'SYSTEM' group by tablespace_name;");
+            ResultSet rs = stm.executeQuery("select tablespace_name from dba_tables where tablespace_name is not null AND tablespace_name != 'SYSTEM' group by tablespace_name");
 
             getColumnNames(rs);
             while (rs.next()) {
@@ -182,7 +182,7 @@ public class Conexion {
 
                 
                     if (selec.equals(a)) {
-                        table = new TableSpace("",a, Float.parseFloat(rs.getString("TOTAL_SPACE_MB")), Float.parseFloat(rs.getString("FREE_SPACE_MB")));
+                        table = new TableSpace(a, Float.parseFloat(rs.getString("TOTAL_SPACE_MB")), Float.parseFloat(rs.getString("FREE_SPACE_MB")));
                         
                     }
                 

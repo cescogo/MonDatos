@@ -73,7 +73,7 @@ public class Vent1 extends JFrame implements ActionListener{
         gc.gridx=5;
         gc.gridy=10;
         add(panel,BorderLayout.CENTER);
-       setSize(400,200);
+       setSize(500,300);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

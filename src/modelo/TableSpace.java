@@ -17,7 +17,7 @@ public class TableSpace {
     private float tam_total;
     private float uso;
     private float free;
-    private float size;
+ 
     private float tasatrans;
     DecimalFormat format;
 
@@ -29,8 +29,8 @@ public class TableSpace {
         fecha="";
     }
 
-    public TableSpace(String fecha,String nombre, float tam_total, float free) {
-        this.fecha=fecha;
+    public TableSpace(String nombre, float tam_total, float free) {
+        this.fecha="";
         this.nombre = nombre;
         this.tam_total = tam_total;
         this.uso = tam_total-free;
@@ -41,22 +41,14 @@ public class TableSpace {
      public TableSpace(String fecha,String nombre, int uso,int size,int tasatran) {
         this.fecha=fecha;
         this.nombre = nombre;
-        this.tam_total = tam_total;
-        this.uso = tam_total-free;
-        this.free= free;
-        this.size=size;
+        this.tam_total = size;
+        this.uso = uso;
+        this.free= 0;
         this.tasatrans=tasatrans;
         format = new DecimalFormat("00.00");
     }
 
-    public float getSize() {
-        return size;
-    }
-
-    public void setSize(float size) {
-        this.size = size;
-    }
-
+ 
     public float getTasatrans() {
         return tasatrans;
     }
@@ -91,7 +83,7 @@ public class TableSpace {
     }
 
     public float getUso() {
-        return uso;
+        return Float.valueOf(format.format(uso).replaceAll(",", "."));
     }
 
     public void setUso(float uso) {
@@ -99,7 +91,7 @@ public class TableSpace {
     }
 
     public float getFree() {
-        return free;
+        return Float.valueOf(format.format(free).replaceAll(",", "."));
     }
 
     public void setFree(float free) {

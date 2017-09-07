@@ -9,31 +9,30 @@ import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import modelo.Table;
+import modelo.TableSpace;
 
 /**
  *
  * @author carmc_000
  */
-public class Tabla extends JPanel {
+public class Tabla extends JFrame {
 
-    public Tabla(ArrayList<Table> ts) {
+    public Tabla(ArrayList<TableSpace> ts) {
         //headers for the table
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
-            "Table", "Size", "T.transaccion","Tamano"
+            "Fecha","Nombre","Registros", "Size", "T.transaccion"
         };
-        Table tab;
+        
         Object[][] data = new Object[ts.size()][];
         for (int i = 0; i < ts.size(); i++) {
-            tab = ts.get(i);
             data[i]
                     = new Object[]{
-                        tab.getName(),
-                        tab.getBytes(),
-                        tab.getCount(),
-                        tab.getBytes()*tab.getCount()
-                       
+                        ts.get(i).getFecha(),
+                        ts.get(i).getNombre(),
+                        ts.get(i).getUso(),
+                        ts.get(i).getTam_total(),
+                        ts.get(i).getTasatrans()                       
                     };
             //Dba_tablespaces, que indices tiene una tabla ,la tabla q dice q columnas tiene los indeces de una tabla sugerencias
             //
@@ -46,10 +45,10 @@ public class Tabla extends JPanel {
         //add the table to the frame
         this.add(new JScrollPane(table));
 
-        //this.setTitle("Tabla");
-        this.setSize(1000, 400);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setResizable(false);
+        this.setTitle("Tabla");
+        this.setSize(600, 400);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         this.setVisible(true);
     }
 

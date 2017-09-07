@@ -6,6 +6,7 @@
 package control;
 
 import java.awt.List;
+import java.sql.SQLException;
 import modelo.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,11 +24,11 @@ public class Control {
     private Vent1 ventIni;
     private Grafico graf;
     ArrayList<String> tabSpa;
-    ArrayList<Table> ta;
+    ArrayList<TableSpace> ta;
     TableSpace tab_graf;
     private Tabla tabla;
-   // SQLiteJDBC sqlite;
-    public Control()
+   SQLiteJDBC sqlite;
+    public Control() throws SQLException
     {
         model= new Conexion();
         model.conectar();
@@ -35,7 +36,11 @@ public class Control {
         tabSpa= new ArrayList<>();
         ta = new ArrayList<>();
          tab_graf= new TableSpace();
-         //sqlite= new SQLiteJDBC();
+         sqlite= new SQLiteJDBC();
+        
+//         sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (1,'12-10-17', 'USERS', 32,15,0);");
+//         sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (2,'13-10-17', 'USERS', 34,15,2);");
+//         
     }
     
     public void iniciar() throws InterruptedException
@@ -45,25 +50,17 @@ public class Control {
         
     }
     
-    public void iniciarVent2(String select) throws InterruptedException 
+    public void iniciarVent2(String select) throws InterruptedException, SQLException 
     {
         tab_graf=model.getGrafica(select);
-        ta = model.getTable(select);
-        graf= new Grafico(ventIni,this,ta);
+        sqlite.conectar();
+        ta=sqlite.select(select);
+        graf= new Grafico(ventIni,this);
         graf.init(tab_graf);
+        tabla=new Tabla(ta);
         
         
     }
-     public ArrayList<Table> iniciarVent3( String ts) throws InterruptedException
-    {
-       ta = model.getTable(ts);
-       return ta;
-        //tabla = new Tabla(ta);
-         
-        
-        
-        
-    }
-     
+    
   
 }
