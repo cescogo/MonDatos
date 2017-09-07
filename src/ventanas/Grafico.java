@@ -132,14 +132,18 @@ public class Grafico extends JFrame {
     g.setColor(Color.LIGHT_GRAY);
     for(int i=0;i<11;i++)
     {
-        g.drawLine(param[i],100, param[i], 250);
+        g.drawLine(param[i],100, param[i], 225);
     }
+     int hwm=gestor.HWM();
+    hwm=posHWM(hwm);
     g.setColor(Color.RED);
-    g.drawLine(398,100, 398, 250);// variable cambiable
+    System.out.println(hwm);
+    g.drawLine(hwm,100, hwm, 225);// variable cambiable
     
     int aux;
+   
     
-    g.setColor(Color.RED);
+    g.setColor(Color.GREEN);
     g.drawRect(125,150,325, 20);// ver eje x
     aux=locuse((int)ts.porcent_use());
     g.fillRect(125,150, aux, 20);
@@ -153,7 +157,13 @@ public class Grafico extends JFrame {
         return aux;
     }
     
-   
+   int posHWM(int por)
+   {
+       int rang=param[(por/10)+1]-param[por/10];
+       int dif=(por%10)*10;
+       return param[por/10]+(dif*rang/100);
+       
+   }
 
    
 

@@ -33,7 +33,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control() throws SQLException
+    public Control()
     {
         model= new Conexion();
         model.conectar();
@@ -78,11 +78,15 @@ public class Control {
         
     }
     
-    public void guardar(TableSpace tab,int id) throws SQLException
+    private void guardar(TableSpace tab,int id) throws SQLException
     {
         sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES ("+id+",'"+tab.getFecha()
                 +"','"+tab.getNombre()+"',"+tab.getUso()+","+tab.getTam_total()+","+tab.getTasatrans()+");");
     }
     
-  
+  public int HWM()
+  {
+      //leer archivo y recuperar el porcentaje de HWM
+      return 85;
+  }
 }
