@@ -10,6 +10,7 @@ package sqlite;
  * @author adan-
  */
 import java.sql.*;
+import java.util.Scanner;
 /**/
 
 
@@ -22,9 +23,20 @@ static Statement stmt = null;
    public static void main( String args[] ) throws SQLException {
  
    conectar();
-   //query("CREATE TABLE TB_SPACES " + "(ID INT PRIMARY KEY     NOT NULL,NOMBRE   TEXT    NOT NULL, SIZE            INT     NOT NULL )");
-   query("INSERT INTO TB_SPACES (ID,NOMBRE,SIZE)VALUES (2, 'USERS', 32);");
+   //query("CREATE TABLE TB_SPACES " + "(id INT PRIMARY KEY     NOT NULL,nombre   TEXT    NOT NULL, size            INT     NOT NULL )");
+   //query("INSERT INTO TB_SPACES (id,nombre,size)VALUES (1, 'SYSTEM', 32);");
+   //query("INSERT INTO TB_SPACES (id,nombre,size)VALUES (2, 'USERS', 41);");
+   //query("INSERT INTO TB_SPACES (id,nombre,size)VALUES (3, 'TBPS01', 68);");
    select("select * from TB_SPACES;");
+   Scanner leer = new Scanner(System.in);  // Reading from System.in
+   System.out.println("Indique la tabla: ");
+   String tabla = leer.next();
+    System.out.println("Indique tamaño: ");
+   String tam = leer.next();
+   
+   query("UPDATE TB_SPACES SET NOMBRE = '"+tabla+"' WHERE ID = 1;");
+   select("select * from TB_SPACES;"); 
+   System.out.println("FIN");
    }
   
    
@@ -40,7 +52,7 @@ static Statement stmt = null;
       }
       System.out.println("Conexion Correcta");
    }  
-   static void query(String sql) throws SQLException{
+  static void query(String sql) throws SQLException{
     try {   stmt = c.createStatement();
           //sql = ""; 
          stmt.executeUpdate(sql);
