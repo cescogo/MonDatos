@@ -5,6 +5,8 @@
  */
 package ventanas;
 
+import control.Control;
+import java.sql.SQLException;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,15 +18,17 @@ import modelo.TableSpace;
  * @author carmc_000
  */
 public class Tabla extends JFrame {
+    private Control gestor;
 
-    public Tabla(ArrayList<TableSpace> ts) {
+    public Tabla(ArrayList<TableSpace> ts,TableSpace tab,Control gestor) throws SQLException {
         //headers for the table
+        this.gestor=gestor;
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
             "Fecha","Nombre","Registros", "Size", "T.transaccion"
         };
         
-        Object[][] data = new Object[ts.size()][];
+        Object[][] data = new Object[ts.size()+1][];
         for (int i = 0; i < ts.size(); i++) {
             data[i]
                     = new Object[]{
@@ -34,10 +38,17 @@ public class Tabla extends JFrame {
                         ts.get(i).getTam_total(),
                         ts.get(i).getTasatrans()                       
                     };
-            //Dba_tablespaces, que indices tiene una tabla ,la tabla q dice q columnas tiene los indeces de una tabla sugerencias
-            //
-            // dele ud a los sql y los calculos para meterlos\el\jueves a l;a vista 
+          
         }
+           data[ts.size()]
+                    = new Object[]{
+                        tab.getFecha(),
+                        tab.getNombre(),
+                        tab.getUso(),
+                        tab.getTam_total(),
+                        tab.getTasatrans()                       
+                    };
+           
 
         //create table with data
         JTable table = new JTable(data, columns);

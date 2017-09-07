@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import modelo.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+
+import java.util.GregorianCalendar;
+
 
 import ventanas.*;
 
@@ -23,11 +27,12 @@ public class Control {
     private Conexion model;
     private Vent1 ventIni;
     private Grafico graf;
-    ArrayList<String> tabSpa;
-    ArrayList<TableSpace> ta;
-    TableSpace tab_graf;
+    private ArrayList<String> tabSpa;
+    private ArrayList<TableSpace> ta;
+    private TableSpace tab_graf;
     private Tabla tabla;
-   SQLiteJDBC sqlite;
+   private SQLiteJDBC sqlite;
+   private Calendar fecha;
     public Control() throws SQLException
     {
         model= new Conexion();
@@ -37,11 +42,12 @@ public class Control {
         ta = new ArrayList<>();
          tab_graf= new TableSpace();
          sqlite= new SQLiteJDBC();
-        
-//         sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (1,'12-10-17', 'USERS', 32,15,0);");
-//         sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (2,'13-10-17', 'USERS', 34,15,2);");
-//         
-    }
+//         sqlite.conectar();
+//         sqlite.query("drop table TB_SPACES");
+//         sqlite.conectar();
+//         sqlite.query("CREATE TABLE TB_SPACES " + "(id INT PRIMARY KEY NOT NULL, fecha TEXT not null,nombre TEXT NOT NULL, registros INT not null, size INT NOT NULL,TasaTrans INT not null )");
+         fecha=  new GregorianCalendar(); 
+ }
     
     public void iniciar() throws InterruptedException
     {        
@@ -52,14 +58,30 @@ public class Control {
     
     public void iniciarVent2(String select) throws InterruptedException, SQLException 
     {
+        String date="";
         tab_graf=model.getGrafica(select);
-        sqlite.conectar();
-        ta=sqlite.select(select);
         graf= new Grafico(ventIni,this);
         graf.init(tab_graf);
-        tabla=new Tabla(ta);
+        sqlite.conectar();
+        ta=sqlite.select(select);        
+        tab_graf=model.getTable(select);
+       date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
+       tab_graf.setFecha(date);
+       if(!ta.isEmpty())
+       {
+           tab_graf.setTasatrans(tab_graf.getUso()-ta.get(ta.size()-1).getUso());
+       }
+       sqlite.conectar();
+       guardar(tab_graf,ta.size());
+        tabla=new Tabla(ta,tab_graf,this);
         
         
+    }
+    
+    public void guardar(TableSpace tab,int id) throws SQLException
+    {
+        sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES ("+id+",'"+tab.getFecha()
+                +"','"+tab.getNombre()+"',"+tab.getUso()+","+tab.getTam_total()+","+tab.getTasatrans()+");");
     }
     
   

@@ -49,7 +49,7 @@ static Statement stmt = null;
       }
       System.out.println("Conexion Correcta");
    }  
-  public  void query(String sql) throws SQLException{
+  public  void query (String sql) throws SQLException{
     try {   stmt = c.createStatement();
           //sql = ""; 
          stmt.executeUpdate(sql);

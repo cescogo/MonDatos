@@ -99,12 +99,14 @@ public class Conexion {
     // se obtienen las tablas de cada tablespace
     // se obtienen las tablas de la base de datos
 
-    public ArrayList<Table> getTable(String tablespace) throws InterruptedException {
+    public TableSpace getTable(String tablespace) throws InterruptedException {
         ArrayList<Table> vec = new ArrayList<>();
         Statement stm;
         ResultSet rs, rs2;
         String a, b;
         Table table;
+        TableSpace registro;
+        int mb=0,regs=0;
         try {
             stm = conexion.createStatement();
             rs = stm.executeQuery("select TABLE_NAME,OWNER from all_tables where tablespace_name = '" + tablespace + "'");
@@ -121,8 +123,8 @@ public class Conexion {
                             + "(SELECT sum(data_length) bytes FROM all_tab_columns where table_name = '" + table.getName() + "' group by table_name) a,\n"
                             + "(select count(*) count from " + table.getOwner() + "." + table.getName() + ") b");
                     rs2.next();
-                    table.setBytes(rs2.getInt("BYTES"));
-                    table.setCount(rs2.getInt("COUNT"));
+                    mb+=rs2.getInt("BYTES");
+                    regs+=rs2.getInt("COUNT");
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -130,7 +132,8 @@ public class Conexion {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return vec;
+        
+        return registro=new TableSpace("",tablespace,regs,mb,0);
     }
 //obtener los byte
 
