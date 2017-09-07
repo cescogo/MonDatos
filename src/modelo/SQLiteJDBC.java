@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sqlite;
+package modelo;
 
 /**
  *
  * @author adan-
  */
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 /**/
 
@@ -20,27 +21,23 @@ static String dir = "org.sqlite.JDBC";
 static String db = "test.db";
 static Statement stmt = null;
 /**/
-   public static void main( String args[] ) throws SQLException {
  
-   conectar();
-   //query("CREATE TABLE TB_SPACES " + "(id INT PRIMARY KEY     NOT NULL,nombre   TEXT    NOT NULL, size            INT     NOT NULL )");
-   //query("INSERT INTO TB_SPACES (id,nombre,size)VALUES (1, 'SYSTEM', 32);");
+   
+  // query("drop table TB_SPACES");
+   //query("CREATE TABLE TB_SPACES " + "(id INT PRIMARY KEY NOT NULL, fecha TEXT not null,nombre TEXT NOT NULL, registros INT not null, size INT NOT NULL,TasaTrans INT not null )");
+  // query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (1,'12-10-17', 'SYSTEM', 32,15,0);");
    //query("INSERT INTO TB_SPACES (id,nombre,size)VALUES (2, 'USERS', 41);");
    //query("INSERT INTO TB_SPACES (id,nombre,size)VALUES (3, 'TBPS01', 68);");
-   select("select * from TB_SPACES;");
-   Scanner leer = new Scanner(System.in);  // Reading from System.in
-   System.out.println("Indique la tabla: ");
-   String tabla = leer.next();
-    System.out.println("Indique tamaño: ");
-   String tam = leer.next();
+   //select("select * from TB_SPACES;");
+//   Scanner leer = new Scanner(System.in);  // Reading from System.in
+//   System.out.println("Indique la tabla: ");
+//   String tabla = leer.next();
+//    System.out.println("Indique tamaño: ");
+//   String tam = leer.next();
    
-   query("UPDATE TB_SPACES SET NOMBRE = '"+tabla+"' WHERE ID = 1;");
-   select("select * from TB_SPACES;"); 
-   System.out.println("FIN");
-   }
-  
-   
-   
+//   query("UPDATE TB_SPACES SET NOMBRE = '"+tabla+"' WHERE ID = 1;");
+//   select("select * from TB_SPACES;"); 
+ 
    static void conectar(){
      
       try {
@@ -63,22 +60,18 @@ static Statement stmt = null;
       }
    }
    
-   static void select(String sql) throws SQLException{
+   static ArrayList<TableSpace> select(String sql) throws SQLException{
+       ArrayList<TableSpace> regs= new ArrayList<>();
    try {
-    
+    TableSpace tab=null;
       stmt = c.createStatement();
       ResultSet rs = stmt.executeQuery(sql);
       
       while ( rs.next() ) {
           rs.getMetaData();
-         int id = rs.getInt("id");
-         String  name = rs.getString("NOMBRE");
-         int size  = rs.getInt("size");
-    
+        tab= new TableSpace(rs.getString("fecha"),rs.getString("NOMBRE"),rs.getInt("registros"),rs.getInt("size"),rs.getInt("tasatrans"));
          
-         System.out.println( "ID = " + id+" NOMBRE = " + name +" size = " + size );
-         
-         System.out.println();
+        regs.add(tab);
       }
       rs.close();
       stmt.close();
@@ -88,5 +81,6 @@ static Statement stmt = null;
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
       System.exit(0);
    }
+   return regs;
    }
 }

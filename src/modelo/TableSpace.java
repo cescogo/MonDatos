@@ -13,9 +13,12 @@ import java.text.DecimalFormat;
  */
 public class TableSpace {
     private String nombre;
+    private String fecha;
     private float tam_total;
     private float uso;
-    public float free;
+    private float free;
+    private float size;
+    private float tasatrans;
     DecimalFormat format;
 
     public TableSpace() {
@@ -23,15 +26,52 @@ public class TableSpace {
         this.tam_total = 0;
         this.uso = 0;
         this.free= 0;
-        
+        fecha="";
     }
 
-    public TableSpace(String nombre, float tam_total, float free) {
+    public TableSpace(String fecha,String nombre, float tam_total, float free) {
+        this.fecha=fecha;
         this.nombre = nombre;
         this.tam_total = tam_total;
         this.uso = tam_total-free;
         this.free= free;
         format = new DecimalFormat("00.00");
+    }
+    
+     public TableSpace(String fecha,String nombre, int uso,int size,int tasatran) {
+        this.fecha=fecha;
+        this.nombre = nombre;
+        this.tam_total = tam_total;
+        this.uso = tam_total-free;
+        this.free= free;
+        this.size=size;
+        this.tasatrans=tasatrans;
+        format = new DecimalFormat("00.00");
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    public float getTasatrans() {
+        return tasatrans;
+    }
+
+    public void setTasatrans(float tasatrans) {
+        this.tasatrans = tasatrans;
+    }
+
+     
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public String getNombre() {
@@ -78,10 +118,7 @@ public class TableSpace {
         return Float.valueOf(format.format((free/tam_total)*100).replaceAll(",", "."));
     }
 
-    @Override
-    public String toString() {
-        return "TableSpace{" + "nombre=" + nombre + ", tam_total=" + tam_total + ", uso=" + porcent_use() + ", free=" + porcent_free() + '}';
-    }
+    
  
     
 }

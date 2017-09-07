@@ -6,14 +6,13 @@
 package control;
 
 import java.awt.List;
-import modelo.Conexion;
+import modelo.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import modelo.Table;
-import modelo.TableSpace;
+
 import ventanas.*;
 
-
+// query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (1,'12-10-17', 'SYSTEM', 32,15,0);");
 
 /**
  *
@@ -27,6 +26,7 @@ public class Control {
     ArrayList<Table> ta;
     TableSpace tab_graf;
     private Tabla tabla;
+   // SQLiteJDBC sqlite;
     public Control()
     {
         model= new Conexion();
@@ -35,6 +35,7 @@ public class Control {
         tabSpa= new ArrayList<>();
         ta = new ArrayList<>();
          tab_graf= new TableSpace();
+         //sqlite= new SQLiteJDBC();
     }
     
     public void iniciar() throws InterruptedException
