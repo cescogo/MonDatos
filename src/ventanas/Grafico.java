@@ -154,7 +154,7 @@ public class Grafico extends JFrame {
     g.drawRect(125,150,325, 20);// ver eje x
     aux=locuse((int)ts.porcent_use());
     g.fillRect(125,150, aux, 20);
-    if(hwm>= ts.porcent_use())
+    if(hwm<= ts.porcent_use())
     {
         try {
             gestor.GuardarHist(ts.getNombre(),ts.getUso(), ts.porcent_use());
