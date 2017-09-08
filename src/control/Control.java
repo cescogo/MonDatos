@@ -41,7 +41,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control() 
+    public Control()  
     {
         model= new Conexion();
         model.conectar();
@@ -54,6 +54,7 @@ public class Control {
 //         sqlite.query("drop table TB_SPACES");
 //         sqlite.conectar();
 //         sqlite.query("CREATE TABLE TB_SPACES " + "(id INT PRIMARY KEY NOT NULL, fecha TEXT not null,nombre TEXT NOT NULL, registros INT not null, size INT NOT NULL,TasaTrans INT not null )");
+//           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
          fecha=  new GregorianCalendar(); 
  }
     
@@ -67,6 +68,8 @@ public class Control {
     public void iniciarVent2(String select) throws InterruptedException, SQLException 
     {
         String date="";
+        ta=null;
+        tab_graf=null;
         tab_graf=model.getGrafica(select);
         graf= new Grafico(ventIni,this);
         graf.init(tab_graf);
@@ -133,5 +136,20 @@ public class Control {
       tabSpa= model.getSegmentos();
       ventIni= new Vent1(this);
         ventIni.init(tabSpa);
+  }
+  public ArrayList<TableSpace> cargarHist(String tab) throws SQLException
+  {
+      ta=null;     
+      sqlite.conectar();
+      ta=sqlite.selectHist(tab);
+      return ta;
+      
+  }
+  public void GuardarHist(String nom,float tam_to,float porc) throws SQLException
+  {
+      String date="";
+      date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
+        sqlite.conectar();
+         sqlite.query("INSERT INTO Hist (fecha,nombre,uso,porcentaje)VALUES ('"+date+"','"+nom+"',"+tam_to+","+porc+");");
   }
 }

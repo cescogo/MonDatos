@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import modelo.Table;
@@ -39,6 +41,7 @@ public class Grafico extends JFrame {
      private JLabel porcent,ch;
      private String[] numb;
      private JButton boton;
+     private int hwm;
      TableSpace ts;
      Color[] colors;
       int[] param;
@@ -66,7 +69,7 @@ public class Grafico extends JFrame {
     public void init(TableSpace tab_graf)
     {
         ts=tab_graf;
-        
+        hwm = 0;
         int j=0;
         GridBagLayout tb= new GridBagLayout();
         pan_prc.setLayout(tb);
@@ -135,7 +138,7 @@ public class Grafico extends JFrame {
     {
         g.drawLine(param[i],100, param[i], 225);
     }
-     int hwm = 0;
+    
          try {
              hwm = gestor.HWM();
          } catch (IOException ex) {
@@ -146,13 +149,21 @@ public class Grafico extends JFrame {
     System.out.println(hwm);
     g.drawLine(hwm,100, hwm, 225);// variable cambiable
     
-    int aux;
-   
-    
+    int aux;   
     g.setColor(Color.GREEN);
     g.drawRect(125,150,325, 20);// ver eje x
     aux=locuse((int)ts.porcent_use());
     g.fillRect(125,150, aux, 20);
+    if(hwm>= ts.porcent_use())
+    {
+        try {
+            gestor.GuardarHist(ts.getNombre(),ts.getUso(), ts.porcent_use());
+            JOptionPane.showMessageDialog(null, "se sobrepaso la marca de HWM de la TableSpace "+ts.getNombre(), "alert", JOptionPane.WARNING_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }
      
 } 
  

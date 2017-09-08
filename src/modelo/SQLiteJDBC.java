@@ -83,4 +83,28 @@ static Statement stmt = null;
    }
    return regs;
    }
+   
+    public  ArrayList<TableSpace> selectHist(String sql) throws SQLException{
+       ArrayList<TableSpace> regs= new ArrayList<>();
+   try {
+    TableSpace tab=null;
+      stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery("select * from Hist where nombre='"+sql+"';");
+      
+      while ( rs.next() ) {
+          rs.getMetaData();
+        tab= new TableSpace(rs.getString("fecha"),rs.getString("NOMBRE"),rs.getInt("uso"),rs.getInt("porcentaje"));
+         
+        regs.add(tab);
+      }
+      rs.close();
+      stmt.close();
+      c.close();
+   
+   }catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+   }
+   return regs;
+   }
 }

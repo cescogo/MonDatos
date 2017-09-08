@@ -47,7 +47,7 @@ public class Confi extends JFrame implements ActionListener{
         add(p_atras,BorderLayout.SOUTH);
         add(cen,BorderLayout.CENTER);
          this.setTitle("Configuracion HWM");
-        this.setSize(800, 200);
+        this.setSize(800, 100);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);

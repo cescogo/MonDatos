@@ -47,7 +47,15 @@ public class TableSpace {
         this.tasatrans=tasatrans;
         format = new DecimalFormat("00.00");
     }
-
+ public TableSpace(String fecha,String nombre, int uso,int size) {
+        this.fecha=fecha;
+        this.nombre = nombre;
+        this.tam_total = size;
+        this.uso = uso;
+        this.free= 0;
+        this.tasatrans=0;
+        format = new DecimalFormat("00.00");
+    }
  
     public float getTasatrans() {
         return tasatrans;
