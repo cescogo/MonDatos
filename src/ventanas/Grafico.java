@@ -15,6 +15,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,7 +135,12 @@ public class Grafico extends JFrame {
     {
         g.drawLine(param[i],100, param[i], 225);
     }
-     int hwm=gestor.HWM();
+     int hwm = 0;
+         try {
+             hwm = gestor.HWM();
+         } catch (IOException ex) {
+             Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+         }
     hwm=posHWM(hwm);
     g.setColor(Color.RED);
     System.out.println(hwm);

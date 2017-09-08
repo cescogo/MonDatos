@@ -6,6 +6,14 @@
 package control;
 
 import java.awt.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import modelo.*;
 import java.util.ArrayList;
@@ -84,15 +92,30 @@ public class Control {
                 +"','"+tab.getNombre()+"',"+tab.getUso()+","+tab.getTam_total()+","+tab.getTasatrans()+");");
     }
     
-  public int HWM()
+  public int HWM() throws FileNotFoundException, IOException
   {
-      //leer archivo y recuperar el porcentaje de HWM
-      return 85;
+      //http://chuwiki.chuidiang.org/index.php?title=Lectura_y_Escritura_de_Ficheros_en_Java
+       String cadena="";
+      FileReader f = new FileReader("config.txt");
+      BufferedReader b = new BufferedReader(f);
+     cadena=b.readLine();
+      b.close();
+      return Integer.parseInt(cadena);
   }
   
-  public void guardarHWM(String porc)
+  public void guardarHWM(String porc) throws IOException
   {
-      
+      //https://geekytheory.com/como-crear-y-modificar-ficheros-con-java
+      //http://www.lawebdelprogramador.com/foros/Java/633554-Crear-Archivos-de-Texto.html
+        String nombreArchivo= "config.txt"; 
+        FileWriter fw = null;	
+        fw = new FileWriter(nombreArchivo); 
+        BufferedWriter bw = new BufferedWriter(fw); 
+        bw.write(porc);
+        //PrintWriter salArch = new PrintWriter(bw); 
+       
+        bw.close();
+    
   }
   
   public void atras (char ban) throws InterruptedException

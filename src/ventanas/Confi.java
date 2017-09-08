@@ -9,6 +9,7 @@ import control.Control;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -35,7 +36,7 @@ public class Confi extends JFrame implements ActionListener{
         cen.add(porce,BorderLayout.CENTER);
         JPanel p_atras= new JPanel();
         JButton aceptar= new JButton("aceptar");
-        aceptar.setActionCommand("atras");
+        aceptar.setActionCommand("aceptar");
         aceptar.addActionListener(this);
         p_atras.add(aceptar,BorderLayout.CENTER);
         JButton atras= new JButton("atras");
@@ -66,7 +67,15 @@ public class Confi extends JFrame implements ActionListener{
         else
             if(e.getActionCommand().equals("aceptar"))
             {
+            try {
                 gestor.guardarHWM(porce.getText());
+                this.dispose();
+                gestor.atras('c');
+            } catch (IOException ex) {
+                Logger.getLogger(Confi.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Confi.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
    
     }
