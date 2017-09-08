@@ -69,10 +69,17 @@ public class Vent1 extends JFrame implements ActionListener{
 
             panel.add(ch,gc);            
         }
-
-        gc.gridx=5;
-        gc.gridy=10;
+        JPanel p_opc=new JPanel();
+        JButton b_config= new JButton("conf. HWM");
+        b_config.setActionCommand("conf");
+        b_config.addActionListener(this);
+        p_opc.add(b_config,BorderLayout.CENTER);
+        b_config= new JButton("Hist. HWM");
+        b_config.setActionCommand("hist");
+        b_config.addActionListener(this);
+        p_opc.add(b_config,BorderLayout.CENTER);
         add(panel,BorderLayout.CENTER);
+        add(p_opc,BorderLayout.SOUTH);
        setSize(500,300);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -84,7 +91,21 @@ public class Vent1 extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         try {
+            if(e.getActionCommand().endsWith("conf"))
+            {
+                this.dispose();
+                Confi con= new Confi(gestor);
+            }
+            else
+                if(e.getActionCommand().endsWith("hist"))
+                {
+                    this.dispose();
+                    Historial his= new Historial(gestor);
+                }
+            else
+            {
             gestor.iniciarVent2(e.getActionCommand());
+            }
         } catch (Exception ex) {
             Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
         }

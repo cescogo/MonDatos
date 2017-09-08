@@ -6,18 +6,23 @@
 package ventanas;
 
 import control.Control;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.TableSpace;
 
 /**
  *
  * @author carmc_000
  */
-public class Tabla extends JFrame {
+public class Tabla extends JFrame implements ActionListener {
     private Control gestor;
 
     public Tabla(ArrayList<TableSpace> ts,TableSpace tab,Control gestor) throws SQLException {
@@ -53,6 +58,12 @@ public class Tabla extends JFrame {
         //create table with data
         JTable table = new JTable(data, columns);
 
+        JButton atras= new JButton("atras");
+        JPanel p_atras= new JPanel();
+        atras.setActionCommand("atras");
+        atras.addActionListener(this);
+        p_atras.add(atras,BorderLayout.CENTER);
+        add(p_atras,BorderLayout.SOUTH);
         //add the table to the frame
         this.add(new JScrollPane(table));
 
@@ -68,6 +79,18 @@ public class Tabla extends JFrame {
         Date date = new Date();
         String sDate = sdf.format(date);
         return sDate;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            if(e.getActionCommand().equals("atras"))
+            {
+            gestor.atras('t');
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

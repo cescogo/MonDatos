@@ -33,7 +33,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control()
+    public Control() 
     {
         model= new Conexion();
         model.conectar();
@@ -88,5 +88,27 @@ public class Control {
   {
       //leer archivo y recuperar el porcentaje de HWM
       return 85;
+  }
+  
+  public void guardarHWM(String porc)
+  {
+      
+  }
+  
+  public void atras (char ban) throws InterruptedException
+  {
+      if(ban=='t')
+      {
+        graf.dispose();
+        tabla.dispose();  
+      }
+            
+      tabSpa=null;
+      ta=null;
+      tab_graf=null;
+      
+      tabSpa= model.getSegmentos();
+      ventIni= new Vent1(this);
+        ventIni.init(tabSpa);
   }
 }
