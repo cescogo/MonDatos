@@ -127,7 +127,7 @@ public class Historial extends JFrame implements ActionListener {
             
         
             try {
-                ts=gestor.cargarHist(porce.getText().toUpperCase());
+                ts=gestor.cargarHist(porce.getText().toUpperCase());//.toUpperCase()
             } catch (SQLException ex) {
                 Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
             }
