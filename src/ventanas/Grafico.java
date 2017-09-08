@@ -38,7 +38,7 @@ public class Grafico extends JFrame {
      private JPanel pan_prc, pArriba,pt;
      private Control gestor;
      private Tabla tabla1;
-     private JLabel porcent,ch;
+     private JLabel porcent,ch,warning;
      private String[] numb;
      private JButton boton;
      private int hwm;
@@ -105,11 +105,13 @@ public class Grafico extends JFrame {
             
         gc.gridx = 1;
         gc.gridy = 1;
-        pArriba.add(new JLabel("memoria en uso: "+Float.toString(ts.getUso())+" mb"), gc);
+        warning=new JLabel("memoria en uso: "+Float.toString(ts.getUso())+" mb");
+        pArriba.add(warning, gc);
         
          gc.gridx = 2;
         gc.gridy = 1;
-        pArriba.add(new JLabel("porc. memoria en uso: "+Float.toString(ts.porcent_use())+"%"), gc);
+        warning=new JLabel("porc. memoria en uso: "+Float.toString(ts.porcent_use())+"%");
+        pArriba.add(warning, gc);
         
         gc.gridx = 1;
         gc.gridy = 2;       
@@ -148,8 +150,8 @@ public class Grafico extends JFrame {
     {
         try {
             gestor.GuardarHist(ts.getNombre(),ts.getUso(), ts.porcent_use());
-            JOptionPane.showMessageDialog(null, "se sobrepaso la marca de HWM de la TableSpace "+ts.getNombre(), "alert", JOptionPane.WARNING_MESSAGE);
-        } catch (SQLException ex) {
+            warning.setForeground(Color.red);
+         } catch (SQLException ex) {
             Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
         }
      
@@ -166,7 +168,7 @@ public class Grafico extends JFrame {
     g.fillRect(125,150, aux, 20);
     System.out.println(ts.porcent_use());
    
-    
+   
      
 } 
  

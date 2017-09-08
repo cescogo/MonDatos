@@ -41,7 +41,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control()  
+    public Control()   
     {
         model= new Conexion();
         model.conectar();
@@ -50,10 +50,13 @@ public class Control {
         ta = new ArrayList<>();
          tab_graf= new TableSpace();
          sqlite= new SQLiteJDBC();
-//         sqlite.conectar();
+//        sqlite.conectar();
 //         sqlite.query("drop table TB_SPACES");
 //         sqlite.conectar();
-//         sqlite.query("CREATE TABLE TB_SPACES " + "(id INT PRIMARY KEY NOT NULL, fecha TEXT not null,nombre TEXT NOT NULL, registros INT not null, size INT NOT NULL,TasaTrans INT not null )");
+//         sqlite.query("drop table Hist");
+//         sqlite.conectar();
+//         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, registros INT not null, size INT NOT NULL,TasaTrans INT not null )");
+//         sqlite.conectar();
 //           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
          fecha=  new GregorianCalendar(); 
  }
@@ -92,7 +95,7 @@ public class Control {
     
     private void guardar(TableSpace tab,int id) throws SQLException
     {
-        sqlite.query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES ("+id+",'"+tab.getFecha()
+        sqlite.query("INSERT INTO TB_SPACES (fecha,nombre,registros,size,tasatrans)VALUES ('"+tab.getFecha()
                 +"','"+tab.getNombre()+"',"+tab.getUso()+","+tab.getTam_total()+","+tab.getTasatrans()+");");
     }
     
