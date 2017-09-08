@@ -70,10 +70,7 @@ public class Control {
         String date="";
         ta=null;
         tab_graf=null;
-        tab_graf=model.getGrafica(select);
-        graf= new Grafico(ventIni,this);
-        graf.init(tab_graf);
-        sqlite.conectar();
+          sqlite.conectar();
         ta=sqlite.select(select);        
         tab_graf=model.getTable(select);
        date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
@@ -85,6 +82,10 @@ public class Control {
        sqlite.conectar();
        guardar(tab_graf,ta.size());
         tabla=new Tabla(ta,tab_graf,this);
+        tab_graf=model.getGrafica(select);
+        graf= new Grafico(ventIni,this);
+        graf.init(tab_graf);
+      
         
         
     }

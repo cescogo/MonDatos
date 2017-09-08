@@ -144,6 +144,16 @@ public class Grafico extends JFrame {
          } catch (IOException ex) {
              Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
          }
+         if(hwm < ts.porcent_use())
+    {
+        try {
+            gestor.GuardarHist(ts.getNombre(),ts.getUso(), ts.porcent_use());
+            JOptionPane.showMessageDialog(null, "se sobrepaso la marca de HWM de la TableSpace "+ts.getNombre(), "alert", JOptionPane.WARNING_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }
     hwm=posHWM(hwm);
     g.setColor(Color.RED);
     System.out.println(hwm);
@@ -154,16 +164,9 @@ public class Grafico extends JFrame {
     g.drawRect(125,150,325, 20);// ver eje x
     aux=locuse((int)ts.porcent_use());
     g.fillRect(125,150, aux, 20);
-    if(hwm<= ts.porcent_use())
-    {
-        try {
-            gestor.GuardarHist(ts.getNombre(),ts.getUso(), ts.porcent_use());
-            JOptionPane.showMessageDialog(null, "se sobrepaso la marca de HWM de la TableSpace "+ts.getNombre(), "alert", JOptionPane.WARNING_MESSAGE);
-        } catch (SQLException ex) {
-            Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     
-    }
+    System.out.println(ts.porcent_use());
+   
+    
      
 } 
  
