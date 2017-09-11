@@ -98,15 +98,16 @@ public class Conexion {
     }
     // se obtienen las tablas de cada tablespace
     // se obtienen las tablas de la base de datos
-
+// meter aqui el query de contar los indices de una tabla
     public TableSpace getTable(String tablespace) throws InterruptedException {
         ArrayList<Table> vec = new ArrayList<>();
         Statement stm;
-        ResultSet rs, rs2;
+        ResultSet rs, rs2,rs3;
         String a, b;
         Table table;
         TableSpace registro;
-        int mb=0,regs=0;
+        int indices=0;
+        int mb=0,regs=0,index=0,aux=0;
         try {
             stm = conexion.createStatement();
             rs = stm.executeQuery("select TABLE_NAME,OWNER from all_tables where tablespace_name = '" + tablespace + "'");
@@ -118,13 +119,19 @@ public class Conexion {
             }
             for (int i = 0; i < vec.size(); i++) {
                 table = vec.get(i);
-                try {
+               try {
                     rs2 = stm.executeQuery("select a.bytes, b.count from\n"
                             + "(SELECT sum(data_length) bytes FROM all_tab_columns where table_name = '" + table.getName() + "' group by table_name) a,\n"
                             + "(select count(*) count from " + table.getOwner() + "." + table.getName() + ") b");
                     rs2.next();
-                    mb+=rs2.getInt("BYTES");
-                    regs+=rs2.getInt("COUNT");
+                     aux=rs2.getInt("BYTES");
+                     regs+=rs2.getInt("COUNT");
+                     System.out.println(aux);
+                    System.out.println(table.getName());
+                      rs3 = stm.executeQuery("select count(index_name) indices from all_indexes where  table_name='"+table.getName()+"'");
+                      rs3.next();
+                      index=rs3.getInt("INDICES");                     
+                      mb+=((aux*0.30)*index);
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -133,7 +140,7 @@ public class Conexion {
             System.out.println(ex.getMessage());
         }
         
-        return registro=new TableSpace("",tablespace,regs,mb,0);
+        return registro=new TableSpace("",tablespace,0,mb,0,regs);
     }
 //obtener los byte
 
@@ -167,16 +174,7 @@ public class Conexion {
 
         try {
             Statement stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("select\n"
-                    + "  a.tablespace_name,\n"
-                    + "  sum(a.bytes)/(1024*1024) total_space_MB,\n"
-                    + "  round(b.free,2) Free_space_MB,\n"
-                    + "  round(b.free/(sum(a.bytes)/(1024*1024))* 100,2) percent_free\n"
-                    + " from dba_data_files a,\n"
-                    + "  (select tablespace_name,sum(bytes)/(1024*1024) free  from dba_free_space\n"
-                    + "  group by tablespace_name) b\n"
-                    + " where a.tablespace_name = b.tablespace_name(+)\n"
-                    + "  group by a.tablespace_name,b.free");
+            ResultSet rs = stm.executeQuery("select a.tablespace_name, sum(a.bytes)/1024/1024 total_space_MB, (b.free/1024/1024) Free_space_MB, round(b.free/(sum(a.bytes))* 100,2) percent_free from dba_data_files a, (select tablespace_name,sum(bytes) free  from dba_free_space group by tablespace_name) b where a.tablespace_name = b.tablespace_name(+) group by a.tablespace_name,b.free");
 
             getColumnNames(rs);
             while (rs.next()) {

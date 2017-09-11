@@ -30,7 +30,7 @@ public class Tabla extends JFrame implements ActionListener {
         this.gestor=gestor;
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
-            "Fecha","Nombre","Registros", "Size", "T.transaccion"
+            "Fecha","Nombre","Mb index", "Mb usado", "T.transaccion","registros"
         };
         
         Object[][] data = new Object[ts.size()+1][];
@@ -41,7 +41,8 @@ public class Tabla extends JFrame implements ActionListener {
                         ts.get(i).getNombre(),
                         ts.get(i).getUso(),
                         ts.get(i).getTam_total(),
-                        ts.get(i).getTasatrans()                       
+                        ts.get(i).getTasatrans(),
+                        ts.get(i).getFree()
                     };
           
         }
@@ -51,7 +52,8 @@ public class Tabla extends JFrame implements ActionListener {
                         tab.getNombre(),
                         tab.getUso(),
                         tab.getTam_total(),
-                        tab.getTasatrans()                       
+                        tab.getTasatrans(),
+                        tab.getFree()
                     };
            
 

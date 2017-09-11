@@ -66,11 +66,19 @@ public class Grafico extends JFrame {
         setResizable(false);
     }
     
-    public void init(TableSpace tab_graf)
+    public void init(TableSpace tab_graf,int hw,int d_hwm,int d_tot)
     {
         ts=tab_graf;
-        hwm = 0;
+        hwm = hw;
         int j=0;
+        if(d_hwm<0)
+        {
+            d_hwm=0;
+        }
+        if(d_tot<0)
+        {
+            d_tot=0;
+        }
         GridBagLayout tb= new GridBagLayout();
         pan_prc.setLayout(tb);
         pt.setLayout(tb);
@@ -97,6 +105,14 @@ public class Grafico extends JFrame {
         gc.gridy = 0;
       
         pArriba.add(new JLabel("INFORMACION:"), gc);
+        gc.gridx = 0;
+        gc.gridy = 1;
+      
+        pArriba.add(new JLabel("Dias para alcanzar el HWM :"+d_hwm), gc);
+        gc.gridx = 0;
+        gc.gridy = 2;
+      
+        pArriba.add(new JLabel("dias para alcanzar el total: "+d_tot), gc);
         
         gc.gridx = 1;
         gc.gridy = 0;
@@ -140,13 +156,7 @@ public class Grafico extends JFrame {
     {
         g.drawLine(param[i],100, param[i], 225);
     }
-    
-         try {
-             hwm = gestor.HWM();
-         } catch (IOException ex) {
-             Logger.getLogger(Grafico.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         if(hwm < ts.porcent_use())
+         if(hwm <= ts.porcent_use())
     {
         try {
             gestor.GuardarHist(ts.getNombre(),ts.getUso(), ts.porcent_use());
@@ -174,7 +184,7 @@ public class Grafico extends JFrame {
  
     private int locuse(int porc)
     {
-        int aux=((325*porc)/100)+1;
+        int aux=((322*porc)/100)+1;
        
         return aux;
     }

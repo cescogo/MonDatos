@@ -25,7 +25,6 @@ import java.util.GregorianCalendar;
 
 import ventanas.*;
 
-// query("INSERT INTO TB_SPACES (id,fecha,nombre,registros,size,tasatrans)VALUES (1,'12-10-17', 'SYSTEM', 32,15,0);");
 
 /**
  *
@@ -41,7 +40,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control()   
+    public Control() throws SQLException   
     {
         model= new Conexion();
         model.conectar();
@@ -55,7 +54,7 @@ public class Control {
 //         sqlite.conectar();
 //         sqlite.query("drop table Hist");
 //         sqlite.conectar();
-//         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, registros INT not null, size INT NOT NULL,TasaTrans INT not null )");
+//         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, MB_TABLAS float not null, usado float NOT NULL,TasaTrans float not null,registros INT NOT NULL)");
 //         sqlite.conectar();
 //           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
          fecha=  new GregorianCalendar(); 
@@ -68,35 +67,48 @@ public class Control {
         
     }
     
-    public void iniciarVent2(String select) throws InterruptedException, SQLException 
+    public void iniciarVent2(String select) throws InterruptedException, SQLException, IOException 
     {
+        TableSpace aux=null;
         String date="";
         ta=null;
         tab_graf=null;
           sqlite.conectar();
         ta=sqlite.select(select);        
-        tab_graf=model.getTable(select);
+        aux=model.getTable(select);
+        tab_graf=model.getGrafica(select);
        date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
-       tab_graf.setFecha(date);
+       aux.setFecha(date);
+       aux.setTam_total(tab_graf.getUso());
+       float hwm=HWM();
+       float D_HWM=-1;
+       float D_tot=-1;
        if(!ta.isEmpty())
        {
-           tab_graf.setTasatrans(tab_graf.getUso()-ta.get(ta.size()-1).getUso());
+           System.out.println(aux.getTam_total()-ta.get(ta.size()-1).getTam_total());
+           aux.setTasatrans(aux.getTam_total()-ta.get(ta.size()-1).getTam_total());            
+           
+               D_HWM =(((hwm/100)*tab_graf.getTam_total())-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());//hwm en bites/ libre en bites
+           System.out.println(D_HWM);
+               D_tot=(tab_graf.getTam_total()-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());
+              
        }
+       
        sqlite.conectar();
-       guardar(tab_graf,ta.size());
-        tabla=new Tabla(ta,tab_graf,this);
-        tab_graf=model.getGrafica(select);
+       guardar(aux);
+        tabla=new Tabla(ta,aux,this);
+     
         graf= new Grafico(ventIni,this);
-        graf.init(tab_graf);
+        graf.init(tab_graf,(int) hwm,(int) D_HWM,(int) D_tot);
       
-        
+        // revisar lo de los dias
         
     }
     
-    private void guardar(TableSpace tab,int id) throws SQLException
+    private void guardar(TableSpace tab) throws SQLException
     {
-        sqlite.query("INSERT INTO TB_SPACES (fecha,nombre,registros,size,tasatrans)VALUES ('"+tab.getFecha()
-                +"','"+tab.getNombre()+"',"+tab.getUso()+","+tab.getTam_total()+","+tab.getTasatrans()+");");
+        sqlite.query("INSERT INTO TB_SPACES (fecha,nombre,MB_TABLAS,usado,tasatrans,registros)VALUES ('"+tab.getFecha()
+                +"','"+tab.getNombre()+"',"+tab.getUso()+","+tab.getTam_total()+","+tab.getTasatrans()+","+tab.getFree()+");");
     }
     
   public int HWM() throws FileNotFoundException, IOException

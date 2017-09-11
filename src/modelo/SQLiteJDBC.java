@@ -69,7 +69,7 @@ static Statement stmt = null;
       
       while ( rs.next() ) {
           rs.getMetaData();
-        tab= new TableSpace(rs.getString("fecha"),rs.getString("NOMBRE"),rs.getInt("registros"),rs.getInt("size"),rs.getInt("tasatrans"));
+        tab= new TableSpace(rs.getString("fecha"),rs.getString("NOMBRE"),rs.getFloat("usado"),rs.getFloat("MB_TABLAS"),rs.getFloat("tasatrans"),rs.getInt("registros"));
          
         regs.add(tab);
       }
