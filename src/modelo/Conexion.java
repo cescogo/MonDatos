@@ -74,8 +74,8 @@ public class Conexion {
     }
 
     // se obtienen los segmentos de la base de datos
-    public ArrayList<String> getSegmentos() throws InterruptedException {
-        ArrayList<String> vec = new ArrayList<>();
+    public ArrayList<TableSpace> getSegmentos() throws InterruptedException {
+        ArrayList<TableSpace> vec = new ArrayList<>();
 
         try {
             Statement stm = conexion.createStatement();
@@ -84,9 +84,9 @@ public class Conexion {
             getColumnNames(rs);
             while (rs.next()) {
 
-                String a = rs.getString("TABLESPACE_NAME");//Aqui deberia jalar el nombre de la columna
+                 //Aqui deberia jalar el nombre de la columna
 
-                vec.add(a);
+                vec.add(new TableSpace(rs.getString("TABLESPACE_NAME"),0,0));
 
             }
         } catch (SQLException ex) {

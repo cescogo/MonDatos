@@ -50,22 +50,22 @@ public class Control {
          tab_graf= new TableSpace();
          sqlite= new SQLiteJDBC();
 
-//        sqlite.conectar();
-//         sqlite.query("drop table TB_SPACES");
-//         sqlite.conectar();
-//         sqlite.query("drop table Hist");
-//         sqlite.conectar();
-//         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, MB_TABLAS float not null, usado float NOT NULL,TasaTrans float not null,registros INT NOT NULL)");
-//         sqlite.conectar();
-//           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
+        sqlite.conectar();
+         sqlite.query("drop table TB_SPACES");
+         sqlite.conectar();
+         sqlite.query("drop table Hist");
+         sqlite.conectar();
+         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, MB_TABLAS float not null, usado float NOT NULL,TasaTrans float not null,registros INT NOT NULL)");
+         sqlite.conectar();
+           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
 
          fecha=  new GregorianCalendar(); 
  }
     
     public void iniciar() throws InterruptedException
     {        
-        tabSpa= model.getSegmentos();
-        ventIni.init(tabSpa);
+        ta= model.getSegmentos();
+        ventIni.init(ta);
         
     }
     
@@ -80,8 +80,8 @@ public class Control {
         aux=model.getTable(select);
         tab_graf=model.getGrafica(select);
        date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
-       aux.setFecha(date);
-       aux.setTam_total(tab_graf.getUso());
+//       aux.setFecha(date);
+//       aux.setTam_total(tab_graf.getUso());
        float hwm=HWM();
        float D_HWM=-1;
        float D_tot=-1;
@@ -101,7 +101,7 @@ public class Control {
        
        sqlite.conectar();
        guardar(aux);
-        tabla=new Tabla(ta,aux,this);
+//        tabla=new Tabla(ta,aux,this);
      
         graf= new Grafico(ventIni,this);
         graf.init(tab_graf,(int) hwm,(int) D_HWM,(int) D_tot);
@@ -154,9 +154,9 @@ public class Control {
       ta=null;
       tab_graf=null;
       
-      tabSpa= model.getSegmentos();
+      ta= model.getSegmentos();
       ventIni= new Vent1(this);
-        ventIni.init(tabSpa);
+        ventIni.init(ta);
   }
   public ArrayList<TableSpace> cargarHist(String tab) throws SQLException
   {
@@ -172,5 +172,17 @@ public class Control {
       date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
         sqlite.conectar();
          sqlite.query("INSERT INTO Hist (fecha,nombre,uso,porcentaje)VALUES ('"+date+"','"+nom+"',"+tam_to+","+porc+");");
+  }
+  
+  public void cargarTabla(String ts) throws InterruptedException, SQLException, IOException{
+ String date="";
+ TableSpace aux=null;
+ date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
+  aux=model.getTable(ts);
+  aux.setFecha(date);
+  aux.setTam_total(tab_graf.getUso());
+  
+       guardar(aux);
+        tabla=new Tabla(ta,aux,this);
   }
 }

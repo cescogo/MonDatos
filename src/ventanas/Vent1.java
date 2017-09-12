@@ -26,6 +26,11 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
+import modelo.TableSpace;
 
 /**
  *
@@ -36,22 +41,48 @@ public class Vent1 extends JFrame implements ActionListener{
     private JPanel panel;
      private Button aceptar;
     private Control gestor;
-    
+   JTable tabla;
+   private ModeloTabla2 table;
     public Vent1(Control c)
     {
         super("tablespace");
         gestor=c;
         panel= new JPanel();   
-     
+        tabla=new JTable();
+        table= new ModeloTabla2();
         
         
     }
     
-    public void init(ArrayList<String> TaSpa)
+    public void init(ArrayList<TableSpace> TaSpa)
     {
+        tabla.setModel(table);
+        JScrollPane desplazamientoTabla = new JScrollPane(
+                  ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                  ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        desplazamientoTabla.setViewportView(tabla);
+          this.gestor=gestor;
+        String[] columns = new String[]{
+            //"Id", "N", "Hourly Rate", "Part Time" 
+            "Nombre","HWM"
+        };
+        
+        Object[][] data = new Object[TaSpa.size()+1][];
+        for (int i = 0; i < TaSpa.size(); i++) {
+            
+            table.addRow(
+                     new Object[]{                      
+                        TaSpa.get(i).getNombre(),
+                        0                    
+                    });
+          
+        }
+          
          
-        GridBagLayout tb= new GridBagLayout();
-        panel.setLayout(tb);
+       panel.add(BorderLayout.CENTER,desplazamientoTabla);
+
+       
+        
         
        
         
@@ -59,16 +90,7 @@ public class Vent1 extends JFrame implements ActionListener{
 
         gc.insets=new Insets(10,10,0,50);
         
-        for(int i=0;i<TaSpa.size();i++)
-        {
-            gc.gridx=0;
-            gc.gridy=i;
-            JButton ch=new JButton(TaSpa.get(i));
-            ch.setActionCommand(TaSpa.get(i));
-            ch.addActionListener(this);
-
-            panel.add(ch,gc);            
-        }
+      
         JPanel p_opc=new JPanel();
         JButton b_config= new JButton("conf. HWM");
         b_config.setActionCommand("conf");
@@ -112,6 +134,21 @@ public class Vent1 extends JFrame implements ActionListener{
 				
     }
     
+class ModeloTabla2 extends DefaultTableModel {
+
+        public ModeloTabla2() {
+            super(new Object[][]{},
+                    new String[]{            
+            "Nombre","HWM"});
+            
+            }
+        
+        @Override
+        public boolean isCellEditable(int filas, int columnas)
+        {
+            return false;
+        }
+    }
 
   
     
