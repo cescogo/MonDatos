@@ -114,7 +114,7 @@ public class Historial extends JFrame implements ActionListener {
         {
             this.dispose();
             try {
-                gestor.atras('h');
+                gestor.atras();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Historial.class.getName()).log(Level.SEVERE, null, ex);
             }

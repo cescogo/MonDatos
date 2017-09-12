@@ -59,7 +59,7 @@ public class Confi extends JFrame implements ActionListener{
         {
             this.dispose();
             try {
-                gestor.atras('c');
+                gestor.atras();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Confi.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -70,7 +70,7 @@ public class Confi extends JFrame implements ActionListener{
             try {
                 gestor.guardarHWM(porce.getText());
                 this.dispose();
-                gestor.atras('c');
+                gestor.atras();
             } catch (IOException ex) {
                 Logger.getLogger(Confi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {

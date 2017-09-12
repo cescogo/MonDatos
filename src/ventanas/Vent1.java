@@ -20,6 +20,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,17 +75,18 @@ public class Vent1 extends JFrame implements ActionListener  {
                     int colum=tabla.getSelectedColumn();
                   if(colum ==0)
                 {
-                    System.out.println(tabla.getValueAt(row, 0));
-                    System.out.println(tabla.getValueAt(row, 1));
+                   
+                       try {
+                           gestor.iniciarVent2(tabla.getValueAt(row, 0).toString());
+                       } catch (InterruptedException ex) {
+                           Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
+                       } catch (SQLException ex) {
+                           Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
+                       } catch (IOException ex) {
+                           Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
+                       }
                 }
-                }else
-                    if(e.getClickCount()==2)
-                {
-                     int row= tabla.getSelectedRow();
-                    int colum=tabla.getSelectedColumn();
-                    tabla.setValueAt("", row, colum);
                 }
-                     
                   
                 
                 
@@ -124,8 +127,8 @@ public class Vent1 extends JFrame implements ActionListener  {
         
       
         JPanel p_opc=new JPanel();
-        JButton b_config= new JButton("conf. HWM");
-        b_config.setActionCommand("conf");
+        JButton b_config= new JButton("guardar HWM");
+        b_config.setActionCommand("guardar");
         b_config.addActionListener(this);
         p_opc.add(b_config,BorderLayout.CENTER);
         b_config= new JButton("Hist. HWM");

@@ -61,7 +61,7 @@ public class Grafico extends JFrame implements ActionListener {
      boton= new JButton();
      gestor=c;
       numb= new String[]{"0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"};
-       setSize(600,250);
+       setSize(600,300);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,7 +97,7 @@ public class Grafico extends JFrame implements ActionListener {
             pan_prc.add(ch,gc);     
             j++;
         }
-        gc.insets=new Insets(10,0,0,10);
+      
            
         
       // aqui van los paneles de los datos y la tabla 
@@ -162,14 +162,14 @@ public class Grafico extends JFrame implements ActionListener {
        
     }
     public void paint( Graphics g )
-{
+{ 
     super.paint( g );  // llamar al método paint de la superclase
  
    param=new int[]{125,150,185,218,250,283,315,350,380,415,450};
     g.setColor(Color.LIGHT_GRAY);
     for(int i=0;i<11;i++)
     {
-        g.drawLine(param[i],100, param[i], 225);
+        g.drawLine(param[i],150, param[i], 300);
     }
          if(hwm <= ts.porcent_use())
     {
@@ -184,15 +184,15 @@ public class Grafico extends JFrame implements ActionListener {
     hwm=posHWM(hwm);
     g.setColor(Color.RED);
     System.out.println(hwm);
-    g.drawLine(hwm,100, hwm, 225);// variable cambiable
+    g.drawLine(hwm,150, hwm, 300);// variable cambiable
     
     int aux;   
     g.setColor(Color.GREEN);
-    g.drawRect(125,150,325, 20);// ver eje x
+    g.drawRect(125,200,325, 20);// ver eje x
     aux=locuse((int)ts.porcent_use());
-    g.fillRect(125,150, aux, 20);
-    System.out.println(ts.porcent_use());
-   
+    g.fillRect(125,200, aux, 20);
+    
+  
    
      
 } 
@@ -223,12 +223,14 @@ public class Grafico extends JFrame implements ActionListener {
             else
                 if(e.getActionCommand().equals("Atras"))
             {
-            gestor.atras('t');
+                this.dispose();
+            gestor.atras();
             
             }
         } catch (Exception ex) {
             Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
-        } }
+        } 
+}
 
     public void atras (char ban) throws InterruptedException
   {
@@ -237,6 +239,8 @@ public class Grafico extends JFrame implements ActionListener {
         tabla1.dispose();  
       }
   }
+
+    
 }
  
 

@@ -103,7 +103,7 @@ public class Control {
        guardar(aux);
 //        tabla=new Tabla(ta,aux,this);
      
-        graf= new Grafico(ventIni,this);
+        graf= new Grafico(ventIni,ta,aux,this);
         graf.init(tab_graf,(int) hwm,(int) D_HWM,(int) D_tot);
       
         // revisar lo de los dias
@@ -142,13 +142,9 @@ public class Control {
     
   }
   
-  public void atras (char ban) throws InterruptedException
+  public void atras () throws InterruptedException
   {
-      if(ban=='t')
-      {
-        graf.dispose();
-        tabla.dispose();  
-      }
+      
             
       tabSpa=null;
       ta=null;
@@ -174,15 +170,4 @@ public class Control {
          sqlite.query("INSERT INTO Hist (fecha,nombre,uso,porcentaje)VALUES ('"+date+"','"+nom+"',"+tam_to+","+porc+");");
   }
   
-  public void cargarTabla(String ts) throws InterruptedException, SQLException, IOException{
- String date="";
- TableSpace aux=null;
- date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
-  aux=model.getTable(ts);
-  aux.setFecha(date);
-  aux.setTam_total(tab_graf.getUso());
-  
-       guardar(aux);
-        tabla=new Tabla(ta,aux,this);
-  }
 }
