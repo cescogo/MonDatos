@@ -40,7 +40,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control()   
+    public Control() throws SQLException   
     {
         model= new Conexion();
         model.conectar();

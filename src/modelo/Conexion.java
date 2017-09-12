@@ -144,30 +144,7 @@ public class Conexion {
     }
 //obtener los byte
 
-    public ArrayList<String> getByte(String t) throws InterruptedException {
-        ArrayList<String> vec = new ArrayList<>();
-
-        try {
-            Statement stm = conexion.createStatement();
-            ResultSet rs = stm.executeQuery("");
-
-            getColumnNames(rs);
-            while (rs.next()) {
-
-                String a = rs.getString("TABLE_NAME");//Aqui deberia jalar el nombre de la columna
-
-                vec.add(a);
-
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-
-        }
-
-        return vec;
-    }
-    // se obtiene la informacion de cada table space para ser graficado
-
+  
     public TableSpace getGrafica(String selec) throws InterruptedException {
         
         TableSpace table = null;
