@@ -16,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -30,13 +32,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import modelo.TableSpace;
 
 /**
  *
  * @author cesar
  */
-public class Vent1 extends JFrame implements ActionListener{
+public class Vent1 extends JFrame implements ActionListener  {
     
     private JPanel panel;
      private Button aceptar;
@@ -57,6 +60,35 @@ public class Vent1 extends JFrame implements ActionListener{
     public void init(ArrayList<TableSpace> TaSpa)
     {
         tabla.setModel(table);
+        
+        tabla.addMouseListener(new MouseAdapter() 
+        {
+            
+            
+            public void mouseClicked(MouseEvent e)
+            {
+                if(e.getClickCount()==1)
+                {
+                   int row= tabla.getSelectedRow();
+                    int colum=tabla.getSelectedColumn();
+                  if(colum ==0)
+                {
+                    System.out.println(tabla.getValueAt(row, 0));
+                    System.out.println(tabla.getValueAt(row, 1));
+                }
+                }else
+                    if(e.getClickCount()==2)
+                {
+                     int row= tabla.getSelectedRow();
+                    int colum=tabla.getSelectedColumn();
+                    tabla.setValueAt("", row, colum);
+                }
+                     
+                  
+                
+                
+            }
+        });
         JScrollPane desplazamientoTabla = new JScrollPane(
                   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -75,7 +107,7 @@ public class Vent1 extends JFrame implements ActionListener{
                         TaSpa.get(i).getNombre(),
                         0                    
                     });
-          
+            
         }
           
          
@@ -143,11 +175,7 @@ class ModeloTabla2 extends DefaultTableModel {
             
             }
         
-        @Override
-        public boolean isCellEditable(int filas, int columnas)
-        {
-            return false;
-        }
+      
     }
 
   

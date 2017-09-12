@@ -49,15 +49,15 @@ public class Control {
         ta = new ArrayList<>();
          tab_graf= new TableSpace();
          sqlite= new SQLiteJDBC();
-
-        sqlite.conectar();
-         sqlite.query("drop table TB_SPACES");
-         sqlite.conectar();
-         sqlite.query("drop table Hist");
-         sqlite.conectar();
-         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, MB_TABLAS float not null, usado float NOT NULL,TasaTrans float not null,registros INT NOT NULL)");
-         sqlite.conectar();
-           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
+//
+//        sqlite.conectar();
+//         sqlite.query("drop table TB_SPACES");
+//         sqlite.conectar();
+//         sqlite.query("drop table Hist");
+//         sqlite.conectar();
+//         sqlite.query("CREATE TABLE TB_SPACES " + "(fecha TEXT not null,nombre TEXT NOT NULL, MB_TABLAS float not null, usado float NOT NULL,TasaTrans float not null,registros INT NOT NULL)");
+//         sqlite.conectar();
+//           sqlite.query("CREATE TABLE Hist " + "(fecha TEXT not null,nombre TEXT NOT NULL, uso INT not null, porcentaje INT NOT NULL)");
 
          fecha=  new GregorianCalendar(); 
  }
