@@ -40,7 +40,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control() throws SQLException   
+    public Control() 
     {
         model= new Conexion();
         model.conectar();
@@ -92,8 +92,10 @@ public class Control {
            
                D_HWM =(((hwm/100)*tab_graf.getTam_total())-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());//hwm en bites/ libre en bites
            System.out.println(D_HWM);
+           
+           if(aux.getTasatrans()!=0){
                D_tot=(tab_graf.getTam_total()-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());
-              
+              }
        }
        
        sqlite.conectar();

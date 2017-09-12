@@ -1,3 +1,2 @@
-ventanas.ModeloTabla4
 ventanas.ModeloTabla1
 ventanas.Historial

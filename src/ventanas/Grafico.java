@@ -189,7 +189,7 @@ public class Grafico extends JFrame {
         return aux;
     }
     
-   int posHWM(int por)
+   int posHWM(int por) 
    {
        int rang=param[(por/10)+1]-param[por/10];
        int dif=(por%10)*10;
