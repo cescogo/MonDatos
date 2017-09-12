@@ -66,6 +66,7 @@ public class Grafico extends JFrame implements ActionListener {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+       
     }
     
     public void init(TableSpace tab_graf,int hw,int d_hwm,int d_tot)
@@ -217,7 +218,8 @@ public class Grafico extends JFrame implements ActionListener {
           try {
             if(e.getActionCommand().equals("Mas información"))
             {
-            tabla1 = new Tabla(ta1,ta2,this);
+            tabla1 = new Tabla(ta1,ta2,this,this.getLocation().getX(),this.getLocation().getY()+200);
+            
             
             }
             else

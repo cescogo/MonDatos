@@ -25,12 +25,12 @@ import modelo.TableSpace;
 public class Tabla extends JFrame implements ActionListener {
     private Grafico graf;
 
-    public Tabla(ArrayList<TableSpace> ts,TableSpace tab,Grafico graf) throws SQLException {
+    public Tabla(ArrayList<TableSpace> ts,TableSpace tab,Grafico graf,double x, double y) throws SQLException {
         //headers for the table
         this.graf=graf;
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
-            "Fecha","Nombre","Mb index", "Mb usado", "T.transaccion","registros"
+            "Fecha","Nombre","Mb index", "Mb usado", "Tasa Consumo","registros"
         };
         
         Object[][] data = new Object[ts.size()+1][];
@@ -74,6 +74,7 @@ public class Tabla extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
     public String fecha() {
@@ -95,4 +96,5 @@ public class Tabla extends JFrame implements ActionListener {
         }
     }
 
+   
 }

@@ -107,4 +107,40 @@ static Statement stmt = null;
    }
    return regs;
    }
+    
+    
+     public  ArrayList<TableSpace> selectHWM(ArrayList<TableSpace> sql) throws SQLException{
+     
+   try {
+       boolean ban=false;
+       for(int i=0;i<sql.size();i++)
+       {
+       
+      stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery("select * from HWM where nombre= '"+sql.get(i).getNombre()+"';");
+      
+     
+     
+      while ( rs.next() ) {
+          rs.getMetaData();
+          sql.get(i).setTam_total(rs.getInt("HWM"));
+        ban=true;
+       
+      }
+        if(ban== false)
+      {
+          sql.get(i).setTam_total(80);
+      }
+     
+      rs.close();
+       }
+        
+       stmt.close();
+      c.close();
+   }catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//      System.exit(0);
+   }
+   return sql;
+   }
 }

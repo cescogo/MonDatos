@@ -29,6 +29,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,6 +49,7 @@ public class Vent1 extends JFrame implements ActionListener  {
     private Control gestor;
    JTable tabla;
    private ModeloTabla2 table;
+  private  ArrayList<TableSpace> TaSpa;
     public Vent1(Control c)
     {
         super("tablespace");
@@ -62,7 +64,7 @@ public class Vent1 extends JFrame implements ActionListener  {
     public void init(ArrayList<TableSpace> TaSpa)
     {
         tabla.setModel(table);
-        
+        this.TaSpa=TaSpa;
         tabla.addMouseListener(new MouseAdapter() 
         {
             
@@ -73,11 +75,12 @@ public class Vent1 extends JFrame implements ActionListener  {
                 {
                    int row= tabla.getSelectedRow();
                     int colum=tabla.getSelectedColumn();
+                    System.out.println(tabla.getValueAt(2, 1).toString());
                   if(colum ==0)
                 {
                    
                        try {
-                           gestor.iniciarVent2(tabla.getValueAt(row, 0).toString());
+                           gestor.iniciarVent2(tabla.getValueAt(row, 0).toString(),(int)Float.parseFloat(tabla.getValueAt(row, 1).toString()));
                        } catch (InterruptedException ex) {
                            Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
                        } catch (SQLException ex) {
@@ -108,11 +111,11 @@ public class Vent1 extends JFrame implements ActionListener  {
             table.addRow(
                      new Object[]{                      
                         TaSpa.get(i).getNombre(),
-                        0                    
+                        TaSpa.get(i).getTam_total()
                     });
             
         }
-          
+           
          
        panel.add(BorderLayout.CENTER,desplazamientoTabla);
 
@@ -148,10 +151,16 @@ public class Vent1 extends JFrame implements ActionListener  {
     public void actionPerformed(ActionEvent e) {
 
         try {
-            if(e.getActionCommand().endsWith("conf"))
+            if(e.getActionCommand().endsWith("guardar"))
             {
-                this.dispose();
-                Confi con= new Confi(gestor);
+                 for (int i = 0; i < TaSpa.size(); i++) {
+                    
+            TaSpa.get(i).setTam_total(Float.parseFloat( tabla.getValueAt(i, 1).toString()));
+            
+        }
+                gestor.guardarHWM(TaSpa);
+                JOptionPane.showMessageDialog(null, "Configuracion guardada con exito", "confirmacion", JOptionPane.INFORMATION_MESSAGE);
+
             }
             else
                 if(e.getActionCommand().endsWith("hist"))
@@ -159,10 +168,7 @@ public class Vent1 extends JFrame implements ActionListener  {
                     this.dispose();
                     Historial his= new Historial(gestor);
                 }
-            else
-            {
-            gestor.iniciarVent2(e.getActionCommand());
-            }
+           
         } catch (Exception ex) {
             Logger.getLogger(Vent1.class.getName()).log(Level.SEVERE, null, ex);
         }
