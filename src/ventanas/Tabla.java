@@ -30,7 +30,7 @@ public class Tabla extends JFrame implements ActionListener {
         this.gestor=gestor;
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
-            "Fecha","Nombre","Mb index", "Mb usado", "T.transaccion","registros"
+            "Fecha","Nombre","MB index", "MB usado", "Tasa Consumo||T.T","Registros"
         };
         
         Object[][] data = new Object[ts.size()+1][];
@@ -70,7 +70,7 @@ public class Tabla extends JFrame implements ActionListener {
         this.add(new JScrollPane(table));
 
         this.setTitle("Tabla");
-        this.setSize(600, 400);
+        this.setSize(800, 400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);

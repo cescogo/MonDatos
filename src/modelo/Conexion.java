@@ -19,11 +19,11 @@ import java.util.ArrayList;
  * @author cesar
  */
 public class Conexion {
-
+///parametros de configuracion de usuario
     private Connection conexion;
     static String url = "jdbc:oracle:thin:@localhost:1521/XE"; //Descargar ojdbc6.jar e incluirlo en la libreria
-    static String user = "system";
-    static String password = "root";
+    static String user = "MONITOR";
+    static String password = "MONITOR";
     private boolean exito;
     private Control gestor;
 

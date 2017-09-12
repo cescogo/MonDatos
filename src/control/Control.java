@@ -90,10 +90,11 @@ public class Control {
            System.out.println(aux.getTam_total()-ta.get(ta.size()-1).getTam_total());
            aux.setTasatrans(aux.getTam_total()-ta.get(ta.size()-1).getTam_total());            
            
-               D_HWM =(((hwm/100)*tab_graf.getTam_total())-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());//hwm en bites/ libre en bites
+               
            System.out.println(D_HWM);
            
            if(aux.getTasatrans()!=0){
+               D_HWM =(((hwm/100)*tab_graf.getTam_total())-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());//hwm en bites/ libre en bites
                D_tot=(tab_graf.getTam_total()-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());
               }
        }

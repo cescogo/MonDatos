@@ -1,0 +1,12 @@
+drop tablespace TBSP01 including contents and datafiles
+*
+ERROR at line 1:
+ORA-00959: tablespace 'TBSP01' does not exist 
+
+
+
+Tablespace created.
+
+
+Table created.
+

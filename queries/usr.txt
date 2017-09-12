@@ -1,0 +1,2 @@
+create user MONITOR identified by MONITOR;
+grant dba to MONITOR;

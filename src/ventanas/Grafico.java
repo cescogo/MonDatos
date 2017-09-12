@@ -73,11 +73,11 @@ public class Grafico extends JFrame {
         int j=0;
         if(d_hwm<0)
         {
-            d_hwm=0;
+            d_hwm=-1;
         }
         if(d_tot<0)
         {
-            d_tot=0;
+            d_tot=-1;
         }
         GridBagLayout tb= new GridBagLayout();
         pan_prc.setLayout(tb);
