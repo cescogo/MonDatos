@@ -34,7 +34,7 @@ import modelo.TableSpace;
  *
  * @author cesar
  */
-public class Grafico extends JFrame {
+public class Grafico extends JFrame implements ActionListener {
      private JPanel pan_prc, pArriba,pt;
      private Control gestor;
      private Tabla tabla1;
@@ -42,17 +42,19 @@ public class Grafico extends JFrame {
      private String[] numb;
      private JButton boton;
      private int hwm;
-     TableSpace ts;
+     TableSpace ts,ta2;
+     private ArrayList<TableSpace> ta1;
      Color[] colors;
       int[] param;
-    public Grafico(Vent1 ven,Control c)
+    public Grafico(Vent1 ven,ArrayList<TableSpace> tabl1,TableSpace aux2,Control c)
     {
         super("tablespace");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
      ven.dispose();   
      
-     
+     ta1=tabl1;
+     ta2 = aux2;
      pan_prc= new JPanel(); 
      pArriba = new JPanel();
      pt = new JPanel();
@@ -73,11 +75,11 @@ public class Grafico extends JFrame {
         int j=0;
         if(d_hwm<0)
         {
-            d_hwm=-1;
+            d_hwm=0;
         }
         if(d_tot<0)
         {
-            d_tot=-1;
+            d_tot=0;
         }
         GridBagLayout tb= new GridBagLayout();
         pan_prc.setLayout(tb);
@@ -140,6 +142,19 @@ public class Grafico extends JFrame {
         gc.gridy = 0;
         pArriba.add(new JLabel("memoria total: "+Float.toString(ts.getTam_total())+" mb"), gc);
         
+        gc.gridx=2;
+        gc.gridy=4;
+        boton= new JButton("Atras");
+        boton.setActionCommand("Atras");
+        boton.addActionListener(this);
+        pArriba.add(boton,gc);
+        
+        gc.gridx=1;
+        gc.gridy=4;
+        boton= new JButton("Mas información");
+        boton.setActionCommand("Mas información");
+        boton.addActionListener(this);
+        pArriba.add(boton,gc);
         
         add(pArriba,BorderLayout.NORTH);
         
@@ -189,7 +204,7 @@ public class Grafico extends JFrame {
         return aux;
     }
     
-   int posHWM(int por) 
+   int posHWM(int por)
    {
        int rang=param[(por/10)+1]-param[por/10];
        int dif=(por%10)*10;
@@ -197,7 +212,31 @@ public class Grafico extends JFrame {
        
    }
 
-   
+    @Override
+    public void actionPerformed(ActionEvent e) {
+          try {
+            if(e.getActionCommand().equals("Mas información"))
+            {
+            tabla1 = new Tabla(ta1,ta2,this);
+            
+            }
+            else
+                if(e.getActionCommand().equals("Atras"))
+            {
+            gestor.atras('t');
+            
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
+        } }
 
-
+    public void atras (char ban) throws InterruptedException
+  {
+      if(ban=='v')
+      {
+        tabla1.dispose();  
+      }
+  }
 }
+ 
+

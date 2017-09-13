@@ -23,14 +23,14 @@ import modelo.TableSpace;
  * @author carmc_000
  */
 public class Tabla extends JFrame implements ActionListener {
-    private Control gestor;
+    private Grafico graf;
 
-    public Tabla(ArrayList<TableSpace> ts,TableSpace tab,Control gestor) throws SQLException {
+    public Tabla(ArrayList<TableSpace> ts,TableSpace tab,Grafico graf) throws SQLException {
         //headers for the table
-        this.gestor=gestor;
+        this.graf=graf;
         String[] columns = new String[]{
             //"Id", "N", "Hourly Rate", "Part Time" 
-            "Fecha","Nombre","MB index", "MB usado", "Tasa Consumo||T.T","Registros"
+            "Fecha","Nombre","Mb index", "Mb usado", "T.transaccion","registros"
         };
         
         Object[][] data = new Object[ts.size()+1][];
@@ -70,7 +70,7 @@ public class Tabla extends JFrame implements ActionListener {
         this.add(new JScrollPane(table));
 
         this.setTitle("Tabla");
-        this.setSize(800, 400);
+        this.setSize(600, 400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
@@ -83,14 +83,14 @@ public class Tabla extends JFrame implements ActionListener {
         return sDate;
     }
 
-    @Override
+        @Override
     public void actionPerformed(ActionEvent e) {
         try {
             if(e.getActionCommand().equals("atras"))
             {
-            gestor.atras('t');
+            graf.atras('v');
             }
-        } catch (InterruptedException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
