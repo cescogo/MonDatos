@@ -40,7 +40,7 @@ public class Control {
     private Tabla tabla;
    private SQLiteJDBC sqlite;
    private Calendar fecha;
-    public Control() 
+    public Control() throws SQLException   
     {
         model= new Conexion();
         model.conectar();
@@ -80,8 +80,8 @@ public class Control {
         aux=model.getTable(select);
         tab_graf=model.getGrafica(select);
        date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
-//       aux.setFecha(date);
-//       aux.setTam_total(tab_graf.getUso());
+       aux.setFecha(date);
+       aux.setTam_total(tab_graf.getUso());
        float hwm=HWM();
        float D_HWM=-1;
        float D_tot=-1;
@@ -90,20 +90,17 @@ public class Control {
            System.out.println(aux.getTam_total()-ta.get(ta.size()-1).getTam_total());
            aux.setTasatrans(aux.getTam_total()-ta.get(ta.size()-1).getTam_total());            
            
-               
-           System.out.println(D_HWM);
-           
-           if(aux.getTasatrans()!=0){
                D_HWM =(((hwm/100)*tab_graf.getTam_total())-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());//hwm en bites/ libre en bites
+           System.out.println(D_HWM);
                D_tot=(tab_graf.getTam_total()-tab_graf.getUso())/(aux.getTasatrans()+aux.getUso());
-              }
+              
        }
        
        sqlite.conectar();
        guardar(aux);
 //        tabla=new Tabla(ta,aux,this);
      
-        graf= new Grafico(ventIni,this);
+        graf= new Grafico(ventIni,ta,aux,this);
         graf.init(tab_graf,(int) hwm,(int) D_HWM,(int) D_tot);
       
         // revisar lo de los dias
@@ -146,8 +143,7 @@ public class Control {
   {
       if(ban=='t')
       {
-        graf.dispose();
-        tabla.dispose();  
+        graf.dispose(); 
       }
             
       tabSpa=null;
@@ -172,17 +168,5 @@ public class Control {
       date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
         sqlite.conectar();
          sqlite.query("INSERT INTO Hist (fecha,nombre,uso,porcentaje)VALUES ('"+date+"','"+nom+"',"+tam_to+","+porc+");");
-  }
-  
-  public void cargarTabla(String ts) throws InterruptedException, SQLException, IOException{
- String date="";
- TableSpace aux=null;
- date=fecha.get(Calendar.DATE)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
-  aux=model.getTable(ts);
-  aux.setFecha(date);
-  aux.setTam_total(tab_graf.getUso());
-  
-       guardar(aux);
-        tabla=new Tabla(ta,aux,this);
   }
 }
